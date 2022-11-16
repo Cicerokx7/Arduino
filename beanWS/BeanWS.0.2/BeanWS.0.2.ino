@@ -36,7 +36,7 @@ const float STEPS_PER_REV = 32;
 const float GEAR_RED = 64;
 const float STEPS_PER_OUT_REV = STEPS_PER_REV*GEAR_RED;
 int StepsRequired;
-Stepper steppermotor(STEPS_PER_REV, 37, 41, 39, 43);
+Stepper steppermotor(STEPS_PER_REV, 35, 39, 37, 41);
 //Mixer
 const int MixerPWM = 10;
 const int MixerCW = 28;
@@ -79,7 +79,7 @@ const int YSmallCupLocation = 2850; // speed 1000
 const int XSyrupLocation = 150; // speed 10000
 const int XPressLocation = 327; // speed 10000
 const int XCapLocation = 420; // speed 10000
-const int YCapLocation = 2300; //speed 1000
+const int YCapLocation = 1000; //speed 1000
 const int XMixerLocation = 503; // speed 10000  ^
 const int YMixerLocation = 4485;  // speed 1000
 
@@ -117,7 +117,7 @@ void setup() {
     pinMode(PressUp, OUTPUT);
     pinMode(PressDown, OUTPUT);
     //Dispensers
-    pinMode(CapDispenser, OUTPUT);
+    //pinMode(CapDispenser, OUTPUT);
     pinMode(LargeCup, OUTPUT);
     pinMode(SmallCup, OUTPUT);
     //Syrup
@@ -142,7 +142,7 @@ void setup() {
     digitalWrite(PressUp, LOW);
     digitalWrite(PressDown, LOW);
     //Dispensers
-    digitalWrite(CapDispenser, LOW);
+    //digitalWrite(CapDispenser, LOW);
     digitalWrite(LargeCup, LOW);
     digitalWrite(SmallCup, LOW);
     //Syrup
@@ -276,8 +276,8 @@ void loop() {
       mixer(50, 10000);
       */
       //cap dispense
-      StepsRequired = STEPS_PER_OUT_REY;
-      Steppermotor.setSpeed(300);
+      StepsRequired = STEPS_PER_OUT_REV;
+      steppermotor.setSpeed(300);
       steppermotor.step(-StepsRequired/2);
       delay(1000);
       steppermotor.step(-StepsRequired/2);
