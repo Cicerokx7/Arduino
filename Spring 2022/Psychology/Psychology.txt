@@ -1,0 +1,461 @@
+Pschology
+
+day 1:
+	Theory:
+		set of statements that explain and predict behavior
+	Hypotheis:
+		prediction that proposes a relationships between vars
+	Operational definition = precise description
+	Replication = reproduction of results
+	Descriptive Methods:
+		Goals = describe a phenominon:
+			observation
+			survays and
+		describes does not explain
+		naturalistic observation:
+			describes does not explain
+			Secretly observing
+			used more for general phenominons
+		Case-Studies:
+			very detailed
+			knowingly observed
+			used more for extreme phenominons
+		Surveys:
+			usually self report
+		Psychology's Scientific Method:
+			measures two or more vars
+			measures in a direction of either more or less
+			(pic 1)
+			correlation:
+				does not mean that it is the cause
+				it is necesary for the cause
+day2:
+	myelin insilator for neurons makes it faster
+day 3:
+	sensation and perception:
+		transduce from analog to digital?
+		transduction for digital to analog?
+			sound waves:
+				middle ear:
+					ossicles = (hammer, anvil, stirrup) = aplifies the eardrum to cochlea
+				inner ear:
+					cochlea = snail thing that transuction, filled with fluid and hairs
+					semicircular canals = balence sensor, connected to the cochlea
+				hearing theories:
+					Place Theory of Pitch Perception:
+						where the vibrations in the cochlea is what determines what is heard
+						true for higher frequency
+					Frequency Theory of Pitch Perception:
+						says the frequency if what determines what is heard
+						true for lower frequency
+				localizing sound = identifies where the sound is
+			boudy senses:
+				touch
+				temperature
+				pain
+				haptic(shape)
+				propioception(where the limbs are)
+				vesibular sys(balance)
+			chemical senses:
+				olfaction = smell
+				gustation = taste also includes smell
+day 4:
+	senses:
+		taste:
+			(sweet(pleasant), sour(if(mild):pleasant; if(strong):not pleasant), salty(pleasant), bitter(not pleasant), umami(pleasant)) and likely more
+		flavor:
+			includes taste and all the other senses
+
+Chptr 7:
+
+	memory:
+		this = learning that persists over time
+		encoding:
+			this = input
+			automatic(implicit memories):
+				uses hind brain stuff
+				implicit memories:
+					self = memories without conscious recall
+			effortful(explicit memories):
+				uses higher level parts of the brain
+				selective attention:
+					
+				divided attention:
+					
+				sustained attention:
+				shallow:
+					physical traits
+				intermedieate:
+					category label
+				deep:
+					personalised
+				elaboration:
+					visual imagery:
+						dual-code hypothesis(paivio):
+							verbal code = words needed
+							image code = detailed image
+					knowledge base
+					spacing effect = how long things are spread out:
+						distrubuted practice
+						massed practice = cramming
+		storage:
+			this = maintenance
+			Atkinson-Shiffrin Model(older idea?):
+				sensory memory = exact copy of incoming information lasting for a fraction of a second-couple of seconds
+				short-term memory
+				long-term memory
+		retrieval:
+			this = output
+
+
+9 for night
+5 for morning
+3/1/22:
+	learning:
+		permanent change brought by repeated dexperience
+		can't be explained by innate or instinct or maturing
+		behaviorism:
+			learing should be a science
+			learning should be studied based on behaviors
+			Ivan Pavlov:
+			John B Watson:
+			Associative learning:
+				learning that certain events occur together
+				more implicit
+				C = conditioned
+				U = Unconditioned
+				S = stimulus
+				R = response
+				N = nutrual
+				classical conditioning:
+					emotion shifts a non-meaningful stimulus to a meaningful stimulus
+					no control over
+					always stimulus then response
+					association between CS and US
+					Ivan Pavlov(started this stuff)
+					NS => no R
+					US => US
+					NS+US => US
+					NS => CS
+					CS => CR
+					very helpful for primative survival
+					acquisition = paring (exponential +)
+					extinction = unpairing (exponetial -)
+					after extinction when a brake is given the stimulus is repaired, but not as significant as the first pairing
+					discrimination = the learned ability to distingish CS and NS
+					Watson (Little Albert Study):
+						unethical
+						taught to fear white rats
+						after he feared all animals and a white mask
+						this is generalization
+						shows how one S can cause multiple R
+				Operant Conditioning:
+					simular to clasical conditioning except more explicit
+					always response then stimulus
+					B.F. Skinner:
+						cat learned to escape by trial and error
+						if the cat was rewarded after its escape it remembered it more
+						this is called shaping
+					positive is when something positive is added
+					negative is when something negative is added, such as a seatbelt beeping thing
+					primary reinforcer is primative biological need
+					secondary reinforcer is simular to money
+					punishment:
+						positive = adds an undesirable element
+						negative = removes a positive element:
+							fine would be a negative punishement
+						behavior is supressed but not forgotten
+						it teaches discrimination amoung situations
+						punishment can teach fear of teacher
+						physical punishment can increase agression
+						best changes in permformance include telling what to do and what not to do
+					learned helplessness = you know it, it's self explanitory
+					shaping:
+						desired behavior taught that is not in the person/organism's
+						complex problems are broken into smaller pieces and strung together in a chain
+			Cognitive learning:
+				more explicit
+				observational learninng:
+3/8/22:
+	CHPTR 9 Developmental:
+		Biological Processes:
+				nature and nurture:
+					nature = biology, heredity
+					nurture = enviroment,
+					work together, however one can be more promoment
+					Dynamic System Theory:
+						perpetual ongoing process molded by a complex network of biological, psychological, and social factors
+						each time period is equally important
+						resilience:
+							a person's ability to adapt and recover
+						resilient children become capable adults
+				three different processes
+				prenatal development:
+					three periods of natal development:
+						zygote(conception):
+							from conception to the time that it is implanted into the uteran wall
+							will begin to develop different layers
+							0-2 weeks
+							no blood or anything being exchanged
+							drinking, smoking, drugs do not have an effect during this stage
+							lowest 8-9 days
+							high end is 2 weeks
+						embryo(fertilization):
+							starts at implantation
+							3-8
+							lots happening, brain and heart are developing
+							most problems occur here
+							central nervous system occurs at the begining of this system
+							noticible brain by week 9
+							most dangerious time to be drinking, smoking, or doing drugs
+						fetus:
+							9-38/40 weeks
+							longest time development
+							age of viability is 14 weeks before full term!
+							7 months in the baby is able to learn languages while in the  womb
+						critical and sensitive periods:
+							critical periods:
+								when if something is missed it cannot be redone
+				prental environmental inlfuences:
+					teratogen:
+						any disease, drug, or other environmental ageent that can cause harm to developing babies
+						not always harmful
+						problems can be missed in animal testing
+						alcohaul is one of the most dangerous
+					nutritian:
+						can be significant, even early on
+						iodine is important for brain development
+					stress:
+					age:
+						after 35 there can be problems for women 20s can be the best age
+						there can only be problems from men at very old age
+				newborn reflexes:
+					absense of presence of reflex fives information about the baby's brain and development
+					rooting reflex:
+						helps the baby with feeding
+					palmar reflex:
+						grasping
+					moro reflex:
+						thrusts arms and legs out and arches back
+					stepping:
+						mimics motion walking
+					?:
+						toes flex when foot is stroked
+					research brain development stuff
+				brain age:
+					20-90:
+						5-10%
+						bain begins to shrink
+						aerobic fitness can grow the hippocampus and decrease brain loss
+				
+			Cognitive Processes:
+				Piaget:
+					thought things were in stages(wrong)
+					birth-2:
+						infant experience through movement and senses development and senses develops schemas, begins to act intelligently
+						sensing and exploring the world
+						underestimated the the ability of infants
+					2-6:
+						
+					#research missed alot
+				
+			Sociomotional Processes:
+3/10/22:
+	CHPRT 9:
+		Biological processes:
+			Cognititve Processes:
+				Piaget:
+					Conservation tasks:
+						the awareness that altering something does not change the fundemental elements
+						2-6 years old ususally fail
+						7-11  years old it is recognized from 7-11
+						one of his errors was that cognition is rooted in action, in reality some are naturally born with
+					one of his errors was that from 12< he thought they would be able to do extremely inteligent thinking(it can error by education and culture)
+					one of his errors he thought that infants were less inteligent than they were(some things are starting to be seen earlier than we were
+					violation of expectation:
+						testing infants with an impossible event and a possible event to test their reaction
+						developed by Rene Baleragion?
+						3-5.5 month old babies were supriesed by impossible events
+						piaget's tasks were more explicit which was more of a cause for error
+						this was more implicit
+						natavist appraoch:
+							domain specific knowledge applies to a single topic
+						wynn:
+							at 6 months the baby can add and subtract
+							in the study the babies might have only been looking the edges of the toys and notice that difference(doesn't seem likely
+				Viygotsky:
+					says that complex mental activities have there roots in social interaction
+					thought that some capabilities can be created through the language(such as the word for color)
+					came before piaget but the research came out after Piaget
+					in some ways his work was less detailed than Piaget due to the cultural differents
+				crossectional research:
+					is when we research any random age
+				longitudinal:
+					is when we follow the same group over a course of time
+				cognitive time of decline peeks at 50 and slowly decline(for longitudinal)(likely accurate)
+				cognitive time of decline peeks at 40 and quickly declines(for crossectionally)(likely false)
+				40-60s is the prime intilectual time
+				fluid:
+					declines from 20s on
+					skills working memory, analytical speed, detecting relationship amoung stimuli
+				crystallized:
+					incressed knowledge, experience, judgement, social conventions
+					serious decline begins in 80s
+		Human development:
+			temperment:
+				characteristic ways of responding
+				thomas and chess theory:
+					easy kids = quickly establish routines, are happy, and adapt
+					difficult childrent = oposite
+					slow to warm up kids = mild low reaction adjusts slowly to new experiences
+					35% kids did not fit into any of these categories
+				new theory:
+					extraversion/surgency:
+						approach, pleasure, activity, smiling, and laughter
+					negative affectivity:
+						frear, frustration, sadness, and discomfort, easily distressed
+					effortful control:
+						self-regulation, attentional focusing and shifting, inhibitoy control, percetual sensitivity, and low-intensity pleasure
+						self regulation is linked to school readiness
+					attachment theory:
+						the close emotional bond between an infant and its caregiver;
+							may provude important foundation for subsiquent
+							?
+						Harlow's Monkeys:
+							the two cloth and feeding mothers, where the baby monkey grew more attatched to the cloth mother
+							Blowlby's ethological theory of attachment:
+								innate signals
+								?
+								Mary Ainsworth:
+									strange stituation
+									?
+									secure attachment:
+										used the relation with the parent to explore, didn't react badly when parent left
+									avoidant attachment:
+										avioded the parents
+									resistant attacchment:
+										ident
+3/22/22:
+	CHPTR 9:
+		Bilogical processes:
+			temperment:
+				new theory:
+					attachment theory:
+						Harlow's Monkeys:
+							Blowlby's ethological theory of attachment:
+								Mary Ainsworth:
+						Secure:
+							Leaders, sensitive to others, popular with peers, initiated 
+						Insecure:
+							Socially withdrawn, hesitant, less willing to learn, less curious
+				parenting:
+					Authoritative:
+						best outcome
+						high in control
+						acceptence
+						control can very depending on situation
+						autonomy is appropriate
+						results:
+							higher self esteem and accedemic output
+					Authoritarian:
+						acceptence is low
+						high control
+						either high or low involcement
+						high control
+						low autonomy
+						results:
+							low confidence, and stress
+					permisive:
+						spoiler
+						acceptence high
+						involvement is either too high or too low
+						results:
+							spoiled brat
+					uninvolved:
+						self explanitory
+						results:
+							most negative outcomes
+							low confidence
+							at risk of becoming a drug addict
+				identity:
+					not seen until adolecences
+					identity achievement:
+						after research then committed to the identity
+					identity moratorium:
+						exploring without a commitiment
+						this a very healthy part
+					it can be very healthy to chose between these too
+					the top two are the best
+					identity foreclosure:
+						commitment without research
+						unhealthy
+					identity diffusion:
+						no exploration and no commitment
+						worst one
+					ethnic identity:
+						attachment to an your own ethnic group
+						attachment to a culture
+						can be more than one culture
+					parents can effect identity
+					the effect of peers and parents on an idedentity is in a perpandicular relationship
+					romantic partners increase
+					emerging adulthood:
+						trasnition between adolencence to adulthood
+						only availible in first world places
+						charactoristics:
+							identity exploration
+							instability
+							self-focus
+							feeling "in between"
+							age of possibilities
+							#your position
+	CHPTR 10:
+			gender:
+				identity
+				cisgeneder = what you believe
+			Gender Schema:
+				culture defines gender
+				gender stereotype:
+					#self explanitory
+					#sexist stuff
+					cultural myths:
+						Maccoby and Jacklin:
+						sais that there aren't real difference based on the gender stereotypes
+						#they showed the stupid Gillet add, so that should help to explain this
+						Nomaidic societies don't have as seperate gender roles
+						Argricultural societies have more seperate gender roles
+						men are now being considered less intelligent
+				Social cognitive theory of gender:
+					says that kids are influenced for gender in a simular way that bobo doll experiment resulted
+				gender schema theory:
+					graudually emereges based on the culture and not direct feedback
+					androgyny:
+						things that are considured more masculine or feminine
+						masculine(instrumentality)
+						feminine(expressiveness)
+						androgyny(both)
+						if both scores on the online quiz are above 4 the androgyninous
+						higher self esteem
+						more likable
+						improved coping and adjustment skills
+						free to explore stuff
+				differences:
+					men will outperform women on visiospatial skills(not by much)
+					men are more assertive and likely to smile
+					boys and men are more indepentent
+					men tend to connect perception with action, women tect to improve social relationships
+					men prefur to work with things
+					testosterone may effect brain development:
+						it can increase lateralization, increases right hemisphere, and decreases left hemisphere
+					women are better at language
+					girls are talked to more than boys at birth
+			
+
+			sexual orientation:
+				who you sleep with
+			sex:
+				#you know
+				23rd chromosones determine this
+				#find the which XY and XX does what
+				gonodal homrmones, estrogen, or androgens, can determine the sex
+				secondary sex charactoristics does the secondary stage

@@ -1,0 +1,431 @@
+Discrete Math
+day 3:
+	if statement = (right arrow):
+		image(9)
+	exclusive or = v:
+	and = ^
+		either one is true but not both
+	Biconditional/Bi-implication = &&:
+		image(7-8)
+		image(10)
+day 4:
+	predicate logic
+		predicate and propositional function example (26)
+		the var in the predicate is called the "domain"
+		propositional funtions do not have a truth val since they need either a specific var or a quantifier
+		if not told about the val of the var the it the statement is false?
+		quantifier = quantifing the propositional funtion by establishing > or < statements to find T or F?:
+			all quantifier = for all x p(x) example(27):
+				example(28)
+				a falsifing statment
+			existential quantifier = for some x p(x) example(27):
+				example(29)
+				oposite of a falsifing statement
+			uniqueness quatifier(simular to existential quantifier) = says that p(x) is tru for only one var:
+				example(30)
+			n = a set of natural nums 1-(infinity)
+			z = -(infinity)-(infinity)
+			z+ => 0
+			z- =< 0
+			r = real numbers
+			q = rational nums fractions since that are divided by ints
+			when writing in english the quantifier follows the propositional function
+			bound = when a quantifier is used on a var
+			free = when a quantifier is not used on a var
+		propisitional function to proposition:
+			function must be bound or set to a specific val
+			quantifiers are incomplete unless the domain of discours is unkown
+			implicit assumption is that all domains are empty if this is false the all propusutional functions are true
+			truth set = if p(x) is predicate and D is domain then it is a set of d that makes p(x) true
+day 5:
+	predicate logic:
+		if domain is finite then elements can be listed
+		if conjunction then each element has an and
+		if disjunction then each element has an or
+		quantifiers with restricted domains:
+			give a property that all elements have to obey
+			members are not explicitly listed
+		precedence for quantifiers:
+			the higher the precedence the lower the scope
+			vars can be replaced by univeral quantifiers
+			remember the result over the proof
+			exetentail quantifier can do the distrobutive thing
+			universal quantifier can not do the distrobutive thing(research more)
+			example(31-33)
+2/15:
+	#accidentally deleted last weeks notes
+	restricted quantifiers:
+		vars are restricted
+			when using an exetential quantifier there is scenerio where the var and the function must be true
+				((exetential)(sub)(V(x))(f(x)) = (exetential)x(V(x)^f(x))
+			when using a universal quantifier all scenerios the var must be true and the function must be true
+				((universal)(sub)(V(x))(f(x)) = (universal)x(V(x)^f(x)) = bad idea
+			when using a universial quantifier it is a good idea to exclude the necesity for all vars to be true
+				(universal)x(-V(x)vV(x)^f(x)) = (universal)x(V(x) -> q(x))
+				#review notes
+		if (claim applies to all members of the domain): use unrestricted quantifiers
+		if (claim applies to some members of the domain): use restricted quantifier
+		nested quantifier = simular to nested loops:
+			outer loop is the further left
+			(universial)(exetential)(x+y=0) = every real number has an inverse
+			(universal)(universal)((x>0)^(y<0) -> (xy<0))
+			the order is important unless all quantifiers are universial
+			when (universial) and (universal) any false answer falsifies the whole unit
+			when (universial) and (exetential) false when there is an x where y is false for every y
+			when (exetential) and (universal false when for every x there is a y that makes the unit false
+			#one more thing goes here look up when you get home
+			if((exetential)(universal)p(x,y) is true then (universal)(exetential)p(x,y) is true
+2/17/22:
+	restricted quantifiers:
+		nested quantifier:
+			two suprising results:
+				if (existential)y(universal)xp(x,y) is true then (universal)x(existential)y is true
+				if (universal)x(existential)yp(x,y) is true the it is not necessary for (existential)y(universal)xp(x,y) to be true
+		Translating Mathematical Statements into predicate logic:
+			example:
+				translate "The sum of two positive ints is always positive" into a logical expression
+			1# rewrite the statement:
+				"for every 2 ints, if these ints are both positive, then the sum of the ints is positive"
+			2# add vars:
+				"for two ints x and y, if x is positive and y is positive then x+y is positive"
+			result:
+				(universal)x(universal)y((x>0)^(y>0)) -> ((x+y)>0)
+				domain is all ints
+	`		nagating nested quantifiers:
+				#slide
+ 			aditional rules of inference for quantified statements:
+				#slide
+		universal modus ponens:
+			combines universal instantiation and modus ponens into one rule
+
+			p
+			p -> q
+			______
+			q
+
+			+
+
+			(universal)xp(x)
+			______________
+			P(C)
+
+			=
+
+			(universal)x(p(x) -> q(x))
+			p(a) where a is a particicular element in the domain
+			____________________________________________________
+			q(a)
+
+		universal modus tollens:
+			combines universal instantiation and modus tollens into one rule
+
+			-q
+			p -> q
+			______
+			-p
+
+			+
+
+			(universal)xp(x)
+			________________
+			p(c)
+
+			=
+
+			(universal)x(p(x) -> q(x))
+			-q(a) where a is a particular element in the domain
+			___________________________________________________
+			-p(a)
+
+2/23/22:
+	proofs:
+		a valid arguement that establishes the truth of a statement
+		informal proof:
+			more than one rule of ingerence are used in a step
+			steps can be skipped
+			rules of inference are oftne explicitly stated
+			easier to introduce
+		theorem:
+			can be shown to be true using:
+				definitions
+				other theorems
+				axioms:
+					assumed to be true
+					not needed to be proven
+					= postulates
+			lemma:
+				a result which is needed to prove a theorem
+				= helping theorem
+				usually easier to use for complicated theorems
+			corollary:
+				a result which follows directly from a theorem
+				less important theorems can be called propositions
+			conjecture:
+				is being proposed true
+				can turn out to be false
+		universal generalization:
+		direct proof:
+			p -> q
+			#research
+	rational number = a real number r is rational if there exist integers p and q where q != 0
+		proof by contraposition:
+			-q -> p
+		vacuous & trivial proofs:
+			p -> q => -pvq
+			a proof that makes use of the fact that p -> q must be true if p is false
+			a proof that makes use of the fact that p -> q must be true when q is true
+		proof by contradiction:
+			= reductio ad absurm
+			assume the oposite theorem is true and solve
+		Theorems that are biconditional statement:
+			if one part of the theorem is proven then the other part is proven
+		proof by counter example:
+			if a falsifying example is discovered then the theorem is false
+		mistakes in proofs:
+			division by 0
+			if p -> q is true and q is true then p must be true = fallacy of affirming the conclusion
+			if p -> q is true and p is false then q is false = fallacy of denying the hypothesis
+			basing steps of the proof on the proof that is being proved = (begging the question)/(circular reasoning)
+such that r = p/q
+3/1/22:
+	proofs:
+			proof by exhaustion:
+				trial and error
+				use if easy
+			proof by cases:
+				proporties are focussed on rather than specific elements
+				#find why n^2 >= 0 is int
+				the statement is grouped into cases and then each case is proved
+				WLOG(without loss of generality):
+					when it doen't matter what case is tested, one or both cases can be tested to prove that the statement is true
+			Existence Proof:
+				constructive:
+					find an example that shows the proposition is true
+				nonconstructive:
+					prove by showing the negation of the proposition is false
+			Uniqueness Proofs:
+				first check existence
+				then check to make sure that if y != x then y cannot work
+			CounterExamples Proofs:
+				find counter examples to disprove
+			proof strategies for solving p -> q:
+				try direct method of proof #?
+				#?
+				backward reasoning:
+					first assume the conclusion is true, then develop sencond conlusion if second conclusion is true work bakc
+					symplify math problems and work backwards
+			open problems:
+				unsolved propositions
+				Fermat's Last Theorem took 300 years to prove
+				p = np(most famous open problem)(we think p != np)
+				3X+1 conjecture:
+	Chptr 2:
+		Sets:
+			discrete structures = used to study discrete objects
+			set is the most fundamental discrete structure
+			this = unordered collection of objects
+			objects in the set are called elements or members
+			roster methods members of a set are explicitly listed:
+				example => S = {a,b,v,d}
+				ordering is umecesary and duplicates are acceptible
+				using ... to infur is acceptable
+			Important sets:
+				N = natural
+				z = ints
+				z+ = positive ints
+				r = real
+				r+ = positive real
+				c = complex
+				q = rational
+3/3/22
+		Sets:
+			set-builder notation:
+				specify the properties that all members must satisfy
+				predicate can be used for a propery
+			interval notation:
+				uses [/]/(/) to specify the range of x
+				inclusive or exclusive is specified by (/)(exclusive) and [/](Inclusive)
+				[a,b] = a <= x <= b
+				[a,b) = a <= x < b
+				(a,b] = a < x <= b
+				(a,b) = a < x < b
+			universal set:
+				includes exerything that is under consideration
+				context dependent
+			empty set/null set:
+				a set with no elements = phi or {}
+				example a empty dir
+				an element with one set
+			singleton set:
+				a set where there will always be one element
+				example there will alway be one president of US
+			venn diagram:
+				universal set is a rectangle labeled U
+				circles within the ractangle represents sets
+				dots represent individual elements
+			there can be sets within sets
+			an empty set is not the same as a set containing an empty set that would be a singleton
+			element c which is within set b which is whithin set a is not an element within a
+			naive vs axiomatic set theory:
+				set theory was developped by Georg Cantor
+				niave set theory can lead to paradoxes
+				axiomatic set theory is used for avioding the paradoxes
+				developed by Bertand Russell
+				Henry is a barber who shaves all people who do not shave themselves, does henry shave himself
+			set equality:
+				two sets are equal if both sets have the same elements
+				{0,0,0,1,3,3} = {0,1,3} != {0,1,2,3}
+			subset:
+				a is a subset of b if all elements of a are in b
+				every set has two sets the null set and itself
+			superset:
+				oposite of subset
+3/8/22:
+	exam:
+		90 mins
+		7 writen questions
+		the key will be scrambled
+		1st part should be quick
+	sets:
+		compliment:
+			it is all the elements not in the set that the compliment is complimenting
+			A-B = A and B(compliment)
+			|A (union) B| = |A| + |B| - |A and B|
+			next question could be on midterm
+			wen diagram is a circular cluster that can help us solve problems involving complimentary sets
+		symetric difference:
+			A (xor) (A-B)(union)(B-A)
+			the compliment is not the same as semetric difference, except for two sets
+			Identity law = A(union)(xor) = A A(intersention)(universal set) = A
+			domination laws = A(union)(universal) = (universal), A(intersection)(null) = (null)
+			idempotent laws = A(union)(laws #research
+			comutitive = A(union)B = B(union)A, = A(intersection)B = B(intersection)A
+			Associative Law
+			distributive law
+			demorgan's Law:
+			absorption law:
+			complement law:
+			proving set identities:
+				prove each set is a subest of other
+				use set builder notation and propositition logic to transorm
+				membership table aproach = simular to a truth table except 1 means element belongs to set where as 0 means it dous not belong to the set
+			generalized unions and intersections:
+				#note new symbol for union run thing and (intersection) run thing
+			multisets:
+				is and unordered collection of elements where multiple elements can occur
+				#research
+####################################################################################################################################################################
+
+													MIDTERM
+
+####################################################################################################################################################################
+	functions:
+		A function assigns each an element to a new element = F: A -> B
+3/22/22:
+	functions:
+		can only be assigned to one element
+		every element of A is assigned to an element B
+		an element in B can have multiple elements from A
+		also called mappings and transformations
+		simular to the map code in programming
+		it can also be consider a subset of AXB:
+			this is restricted to be a relation where no two elemts of the relarion have the same first element
+			(universal)x[x(element of)A->(existential)y[y(element of)B^(x,y)(element of)f]]
+			find the other one
+		
+		A is the domain
+		B is the codomain
+		if f(a) = b:
+			the b is called the image of a under f
+			a is called the preimage of b
+			the range of f is the set of all images of points in A under f.  we denote it by f(A).  the set of all elements of B that have an element assigned from A is the range	
+			the range is always a subset fo B, and sometimes a proper subset
+ 			set of images is the range
+			
+		function is:
+			increasing (find the slide) the line can be flat but when not flat the line must be increasing
+			decreasing the line can be flat but when not flat the line must always be increasing
+			strictly increasing the line must always be increasing
+			strictly decreasing the line must always be decreasing
+		injections:
+			also called a one to one functions
+			this time there must be only an element of B can only have one element from A connected to it
+			every image will have a unique preimage
+			to SHOW = if f(x) = f(y) the x,y(elements of) A then x=y(LOOK at slide for the rest)
+		surjection:
+			also called onto
+			every element in A must be asigned to one of every element of B
+			(universal)y(existential)x(f(x) = y)
+			f(x) = x+1 from Z to Z, is an example
+		bijection:
+			also called a one to one corrispondence
+			a function that is both an injection and a bijection
+			F^-1(y)=x iff f(x)=y
+			no inverse function exists unless f is a bijection
+			
+		#Look up slide for examples on how to show these things!!!!!!
+		
+		composition:
+			nested functions
+			let f:B->C, g:A->B the composition of f with g is f(circle thing)g is the function from A to C defined by f(circle thing)g(x) = f(g(x))
+			like how the enigma machine would make multiple changes to the letter
+			the order is important
+			the function that is listed closest to the element will be used first
+			example g(x) = 2x+1 and f(x) = x^2:
+				g(circle thing)f(x) = g(f(x)) = 2x^2+1
+				f(circle thing)g(x) = f(g(x)) = (2x+1)^2
+			
+		
+
+
+
+
+
+
+
+
+
+ I'm Jack Jones I am a Junior hear at Ut dallas
+I'm majoring in computer science
+For Programming experience I've made severial fully ataunomous robots.  One of which was a small robot that was able to follow the sidewalk in my nieghborhood for several hours while carrying a heavy load. Another Robot was a robot that competed in the 6-can competition at the Dallas Personal Robotics group and was able to win 3rd place.
+for my work experience I work at aperio insights as a market researcher last summer, where I reasereched the major tech companies that were relevent to our client and in order to find out what would be helpful to improve our clients buisness.
+
+I'm looking for a summer internship at capsher, and I had a couple questions to ask
+
+what is the main thing that capsher looks for when evaluating a potential new interns
+
+
+at the ground level
+
+
+what inparticular brought you to work at the capsher
+
+
+#familar amd,  passanate,
+
+#software development
+
+#1-3
+#3-4
+
+#SQL
+
+are there any skills that you'd recomend I obtain
+getting some experience with full stack
+visual
+
+#what particlular language will be used
+
+does capsher operate with the agile methodology
+some
+
+
+do you have a linked in account
+
+#how many interns will you be hiring
+
+#will I have to work on site or will I be able to work remote
+
+#some prefur onsite typically
+#sophie roth
+
