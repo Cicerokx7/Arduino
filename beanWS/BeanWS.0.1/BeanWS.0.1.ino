@@ -48,7 +48,7 @@ Stepper steppermotor(STEPS_PER_REV, 35, 39, 37, 41);
  *********************************/
 int xLocation = 0;
 long yLocation = 0;
-short calibration = -1;
+short calibration = 6;//-1
 short count = 0;
 //const int yMax = 5850;
 const long YMax = 5725; // speed 1000
@@ -79,7 +79,7 @@ const int YSmallCupLocation = 2850; // speed 1000
 const int XSyrupLocation = 150; // speed 10000
 const int XPressLocation = 327; // speed 10000
 const int XCapLocation = 420; // speed 10000
-const int YCapLocation = 1000;//2300; //speed 1000
+const int YCapLocation = 400;//2300; //speed 1000
 const int XMixerLocation = 503; // speed 10000  ^
 const int YMixerLocation = 4485;  // speed 1000
 
@@ -184,12 +184,22 @@ void loop() {
     *       STEPPER CALIBRATION        *
     *                                  *
     ***********************************/
-    if(calibration == -1){
+    if(calibration == 0){
       capPress(100);
       capPress(PressMax);
-      calibration = 0;
+      calibration = 1;
     }
-    if(calibration == 0){
+    if(calibration == 1){
+      StepsRequired = STEPS_PER_OUT_REV;
+      steppermotor.setSpeed(300);
+      //calibrate cap dispenser steppers;
+      steppermotor.step(-StepsRequired/2);
+      delay(1000);
+      steppermotor.step(-StepsRequired/2);
+      delay(5000);
+      calibration = 2;
+    }
+    if(calibration == 2){
           Serial.println("Stepper Calibration");
     Serial.println(calibration);
             digitalWrite(YDir, LOW);
@@ -206,25 +216,25 @@ void loop() {
     }
     if(count == 3){
       count = 0;
-      calibration = 1;
+      calibration = 3;
       Serial.println("stop");
     }
     }
     //press setup
-    if(calibration == 1){
+    if(calibration == 3){
       Serial.println("Stepper Calibration");
     Serial.println(calibration);
-      calibration = 2;
+      calibration = 4;
     }
     //y axis setup
-    if(calibration == 2){
+    if(calibration == 4){
       Serial.println("Stepper Calibration");
     Serial.println(calibration);
       delay(1000);
-      calibration = 3;
+      calibration = 5;
     }
     //x axis setup
-    if(calibration == 3){
+    if(calibration == 5){
       gripperServo.write(GripperFullClose);
       if(xSwitch == LOW){
         Serial.println("please");
@@ -237,7 +247,7 @@ void loop() {
       }
       Serial.println("test");
     if(xSwitch == HIGH){
-           calibration = 4;
+           calibration = 6;
            gripperServo.write(GripperFullClose);
            delay(1000);
     }
@@ -247,11 +257,12 @@ void loop() {
      * program begins
      * 
      **********************/
-    if(calibration == 4){
+    if(calibration == 6){
       Serial.println("calibration 4 please work");
       /******************************
        *       grab large cup       *
        ******************************/
+       /*
       calibration = 5; 
       xAxis(XBigCupLocation, XSpeed);
       gripperServo.write(GripperPartialOpen);
@@ -277,18 +288,14 @@ void loop() {
       mixer(50, 10000);
       */
       //cap dispense
+      /*
       xAxis(XCapLocation, XSpeed);
       yAxis(YCapLocation, YSpeed);
+      */
 //      digitalWrite(CapDispenser, HIGH);
 //      delay(50);
 //      digitalWrite(CapDispenser, LOW);
 //      delay(1000);
-      StepsRequired = STEPS_PER_OUT_REV;
-      steppermotor.setSpeed(300);
-      steppermotor.step(-StepsRequired/2);
-      delay(1000);
-      steppermotor.step(-StepsRequired/2);
-      delay(5000);
       steppermotor.step(-StepsRequired/2);
       delay(1000);
       steppermotor.step(-StepsRequired/2);
@@ -301,11 +308,11 @@ void loop() {
       
       capPress(PressLargeCup);
       capPress(PressMax);
-      calibration = 5;
+      calibration = 7;
       
       }
       /*
-      if(calibration == 5){
+      if(calibration == 7){
       xAxis(XBigCupLocation, XSpeed);
       gripperServo.write(GripperPartialOpen);
       yAxis(YBigCupLocation, YSpeed);
