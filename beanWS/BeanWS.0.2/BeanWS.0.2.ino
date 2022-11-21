@@ -41,9 +41,9 @@ const float GEAR_RED = 64;
 const float STEPS_PER_OUT_REV = STEPS_PER_REV*GEAR_RED;
 int StepsRequired;
 short wormGearPointer = 0;
-Stepper wormGearOne(STEPS_PER_REV, 35, 39, 37, 41);
-Stepper wormGearTwo(STEPS_PER_REV, 27, 31, 29, 33);//?
-Stepper wormGearThree(STEPS_PER_REV, 19, 23, 21, 25);//?
+Stepper wormGearOne(STEPS_PER_REV, 38, 42, 40, 44);
+Stepper wormGearTwo(STEPS_PER_REV, 37, 34, 35, 36);
+Stepper wormGearThree(STEPS_PER_REV, 39, 43, 41, 45);
 
 
 /*********************************
@@ -197,7 +197,9 @@ void loop() {
     }
     if(calibration == 1){
       StepsRequired = STEPS_PER_OUT_REV;
-      steppermotor.setSpeed(300);
+      wormGearOne.setSpeed(300);
+      wormGearTwo.setSpeed(300);
+      wormGearThree.setSpeed(300);
       //calibrate cap dispenser steppers;
       /*
       steppermotor.step(-StepsRequired/2);
@@ -266,7 +268,9 @@ void loop() {
      * 
      **********************/
     if(calibration == 6){
-      Serial.println("calibration 4 please work");
+      StepsRequired = STEPS_PER_OUT_REV;
+      wormGearOne.setSpeed(300);
+      delay(1000);
       /******************************
        *       grab large cup       *
        ******************************/
@@ -305,6 +309,7 @@ void loop() {
 //      digitalWrite(CapDispenser, LOW);
 //      delay(1000);
       capDispenser(1);
+      /*
       //capDispenser(1, 600);
       yAxis(0,YSpeed);
       
@@ -315,7 +320,7 @@ void loop() {
       capPress(PressLargeCup);
       capPress(PressMax);
       calibration = 7;
-      
+      */
       }
       /*
       if(calibration == 7){
@@ -560,76 +565,82 @@ void mixer(int power, int timer){
 /*********************
  *   Cap Dispenser   *
  *********************/
- void capDispenser(short caps){
+ void capDispenser(int caps){
+  Serial.println("test");
     for(int i = 0; i < StepsRequired*caps; i++){
-      if(capDispenserPointer == 0){
+      Serial.print("test");
+      if(wormGearPointer == 0){
         wormGearOne.step(-1);
         wormGearTwo.step(-1);
         wormGearThree.step(-1);
-        capDispenserPointer = 1;
+        wormGearPointer = 1;
+        Serial.println("test");
       }
-      else if(capDispenserPointer == 1){
-        wormGearOne.step(-1);
+      else if(wormGearPointer == 1){
         wormGearTwo.step(-1);
         wormGearThree.step(-1);
-        capDispenserPointer = 2;     
+        wormGearOne.step(-1);
+        wormGearPointer = 2;  
       }
       else{
+        wormGearThree.step(-1);
         wormGearOne.step(-1);
         wormGearTwo.step(-1);
-        wormGearThree.step(-1);
-        capDispenserPointer = 3;
+        wormGearPointer = 3;
       }
     }
     return;
  }
- void capDispenser(short caps; int spede){
-  steppermotor.setSpeed(spede);
+ void capDispenser(short caps, int spede){
+  wormGearOne.setSpeed(spede);
+  wormGearTwo.setSpeed(spede);
+  wormGearThree.setSpeed(spede);
   for(int i = 0; i < StepsRequired*caps; i++){
-      if(capDispenserPointer == 0){
+      if(wormGearPointer == 0){
         wormGearOne.step(-1);
         wormGearTwo.step(-1);
         wormGearThree.step(-1);
-        capDispenserPointer = 1;
+        wormGearPointer = 1;
       }
-      else if(capDispenserPointer == 1){
+      else if(wormGearPointer == 1){
         wormGearTwo.step(-1);
         wormGearThree.step(-1);
         wormGearOne.step(-1);
-        capDispenserPointer = 2;     
+        wormGearPointer = 2;     
       }
       else{
         wormGearThree.step(-1);
         wormGearOne.step(-1);
         wormGearTwo.step(-1);
-        capDispenserPointer = 3;
+        wormGearPointer = 3;
       }
     }
     return;
  }
 
- void capDispenser(int steps; int spede){
-  steppermotor.setSpeed(spede);
+ void capDispenser(int steps, int spede){
+  wormGearOne.setSpeed(spede);
+  wormGearTwo.setSpeed(spede);
+  wormGearThree.setSpeed(spede);
   for(int i = 0; i < steps; i++){
-      if(capDispenserPointer == 0){
+      if(wormGearPointer == 0){
         wormGearOne.step(-1);
         wormGearTwo.step(-1);
         wormGearThree.step(-1);
-        capDispenserPointer = 1;
+        wormGearPointer = 1;
       }
-      else if(capDispenserPointer == 1){
+      else if(wormGearPointer == 1){
         wormGearTwo.step(-1);
         wormGearThree.step(-1);
         wormGearOne.step(-1);
-        capDispenserPointer = 2;     
+        wormGearPointer = 2;     
       }
       else{
         wormGearThree.step(-1);
         wormGearOne.step(-1);
         wormGearTwo.step(-1);
-        capDispenserPointer = 3;
+        wormGearPointer = 3;
       }
     }
     return;
  }
- */

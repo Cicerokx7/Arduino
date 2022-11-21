@@ -296,7 +296,7 @@ void loop() {
 //      delay(50);
 //      digitalWrite(CapDispenser, LOW);
 //      delay(1000);
-      steppermotor.step(-StepsRequired/2);
+      .step(-StepsRequired/2);
       delay(1000);
       steppermotor.step(-StepsRequired/2);
       delay(5000);
