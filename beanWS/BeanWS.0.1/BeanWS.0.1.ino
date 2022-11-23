@@ -40,7 +40,7 @@ const float STEPS_PER_REV = 32;
 const float GEAR_RED = 64;
 const float STEPS_PER_OUT_REV = STEPS_PER_REV*GEAR_RED;
 int StepsRequired;
-Stepper steppermotor(STEPS_PER_REV, 35, 39, 37, 41);
+Stepper steppermotor(STEPS_PER_REV, 38, 42, 40, 44);
 
 
 /*********************************
@@ -296,10 +296,12 @@ void loop() {
 //      delay(50);
 //      digitalWrite(CapDispenser, LOW);
 //      delay(1000);
-      .step(-StepsRequired/2);
+ steppermotor.setSpeed(300);
+      steppermotor.step(-StepsRequired/2);
       delay(1000);
       steppermotor.step(-StepsRequired/2);
       delay(5000);
+      /*
       yAxis(0,YSpeed);
       
       //cap press
@@ -309,7 +311,7 @@ void loop() {
       capPress(PressLargeCup);
       capPress(PressMax);
       calibration = 7;
-      
+      */
       }
       /*
       if(calibration == 7){
