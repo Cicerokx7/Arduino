@@ -65,14 +65,14 @@ const int YSpeed = 1000;
  *       locations       *
  *************************/
 //Gripper
-const int GripperPartialOpen = 77;//70
+const int GripperPartialOpen = 80;//70
 const int GripperOpen = 170;//150
 const int GripperClose = 65;//30
 const int GripperFullClose = 65;//30
 //Cap Press
 const float PressMax = 957.0;
 const float PressStart = 0.0;//
-const float PressLargeCup = 25.0;
+const float PressLargeCup = 15.0;
 const float PressSmallCup = 2.0;
 const float PressMin = 1.09;
 //Stepper Motors
