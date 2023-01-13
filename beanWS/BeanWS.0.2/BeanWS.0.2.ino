@@ -185,50 +185,48 @@ void mixer(int, int);
 //void capDispenser(int, int);
 
 void loop() {
-  while(xLocation <= XMax){
-    while(yLocation <= YMax){
-     /******************************
-      *       Set Input Vars       *
-      ******************************/
-    xSwitch = digitalRead(XSwitchInput);
+  /******************************
+  *       Set Input Vars       *
+  ******************************/
+  xSwitch = digitalRead(XSwitchInput);
     
-    ySwitch = digitalRead(YSwitchInput);
-    /***********************************
-    *                                  *
-    *       STEPPER CALIBRATION        *
-    *                                  *
-    ***********************************/
-    if(calibration == 0){
-      capPress(100);
-      capPress(PressMax);
-      Serial.println("testOne");
-      calibration = 1;
-    }
-    if(calibration == 1){
-      Serial.println("testTwo");
-      StepsRequired = STEPS_PER_OUT_REV;
-      capDispenser.setSpeed(300);
-      Serial.println("testThree");
-      capDispenser.step(-StepsRequired/2);
-      //calibrate cap dispenser steppers;
-      /*
-      steppermotor.step(-StepsRequired/2);
-      delay(1000);
-      steppermotor.step(-StepsRequired/2);
-      delay(5000);
-      */
-      calibration = 2;
-    }
-    if(calibration == 2){
-          Serial.println("Stepper Calibration");
+  ySwitch = digitalRead(YSwitchInput);
+  /***********************************
+  *                                  *
+  *       STEPPER CALIBRATION        *
+  *                                  *
+  ***********************************/
+  if(calibration == 0){
+    capPress(100);
+    capPress(PressMax);
+    Serial.println("testOne");
+    calibration = 1;
+  }
+  if(calibration == 1){
+    Serial.println("testTwo");
+    StepsRequired = STEPS_PER_OUT_REV;
+    capDispenser.setSpeed(300);
+    Serial.println("testThree");
+    capDispenser.step(-StepsRequired/2);
+    //calibrate cap dispenser steppers;
+    /*
+    steppermotor.step(-StepsRequired/2);
+    delay(1000);
+    steppermotor.step(-StepsRequired/2);
+    delay(5000);
+    */
+    calibration = 2;
+  }
+  if(calibration == 2){
+    Serial.println("Stepper Calibration");
     Serial.println(calibration);
-            digitalWrite(YEnable, LOW);
-            digitalWrite(YDir, LOW);
-            digitalWrite(YStep, HIGH);
-            delayMicroseconds(10);
-            digitalWrite(YStep, LOW);
-            delayMicroseconds(10);
-            Serial.println(ySwitch);
+    digitalWrite(YEnable, LOW);
+    digitalWrite(YDir, LOW);
+    digitalWrite(YStep, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(YStep, LOW);
+    delayMicroseconds(10);
+    Serial.println(ySwitch);
     if(ySwitch == LOW){
       count = 0;
     }
@@ -241,114 +239,112 @@ void loop() {
       calibration = 3;
       Serial.println("stop");
     }
-    }
+  }
     //press setup
-    if(calibration == 3){
-      Serial.println("Stepper Calibration");
+  if(calibration == 3){
+    Serial.println("Stepper Calibration");
     Serial.println(calibration);
-      calibration = 4;
-    }
-    //y axis setup
-    if(calibration == 4){
-      Serial.println("Stepper Calibration");
+    calibration = 4;
+  }
+  //y axis setup
+  if(calibration == 4){
+    Serial.println("Stepper Calibration");
     Serial.println(calibration);
-      delay(1000);
-      calibration = 5;
+    delay(1000);
+    calibration = 5;
+  }
+  //x axis setup
+  if(calibration == 5){
+    gripperServo.write(GripperFullClose);
+    if(xSwitch == LOW){
+      Serial.println("please");
+      digitalWrite(XDir, LOW);
+      digitalWrite(XStep, HIGH);
+      delayMicroseconds(100);
+      digitalWrite(XStep, LOW);
+      delayMicroseconds(100);
+      Serial.println(xSwitch);
     }
-    //x axis setup
-    if(calibration == 5){
-      gripperServo.write(GripperFullClose);
-      if(xSwitch == LOW){
-        Serial.println("please");
-            digitalWrite(XDir, LOW);
-            digitalWrite(XStep, HIGH);
-            delayMicroseconds(100);
-            digitalWrite(XStep, LOW);
-            delayMicroseconds(100);
-            Serial.println(xSwitch);
-      }
-      Serial.println("test");
+    Serial.println("test");
     if(xSwitch == HIGH){
-           calibration = 6;
-           gripperServo.write(GripperFullClose);
-           delay(1000);
+      calibration = 6;
+      gripperServo.write(GripperFullClose);
+      delay(1000);
     }
-    }
+  }
     /*********************
      * 
      * program begins
      * 
      **********************/
-    if(calibration == 6){
-      /******************************
-       *       grab large cup       *
-       ******************************/
-      calibration = 7; 
-      xAxis(XBigCupLocation, XSpeed);
-      gripperServo.write(GripperPartialOpen);
-      yAxis(YBigCupLocation, YSpeed);
-      gripperServo.write(GripperClose);
-      delay(1000);
-      yAxis(YBigCupLocation+200, YSpeed);
-      digitalWrite(LargeCup, HIGH);
-      //delay(110);
-      yAxis(YBigCupLocation, YSpeed);
-      digitalWrite(LargeCup, LOW);
-      //delay(1000);
+  if(calibration == 6){
+    /******************************
+     *       grab large cup       *
+     ******************************/
+    calibration = 7; 
+    xAxis(XBigCupLocation, XSpeed);
+    gripperServo.write(GripperPartialOpen);
+    yAxis(YBigCupLocation, YSpeed);
+    gripperServo.write(GripperClose);
+    delay(1000);
+    yAxis(YBigCupLocation+200, YSpeed);
+    digitalWrite(LargeCup, HIGH);
+    //delay(110);
+    yAxis(YBigCupLocation, YSpeed);
+    digitalWrite(LargeCup, LOW);
+    //delay(1000);
+    
+    //add syrup
+    yAxis(0, YSpeed);
+    xAxis(XSyrupLocation, XSpeed);
+    //syrup(1, 30000);
+    syrup(1, 3000);
       
-      //add syrup
-      yAxis(0, YSpeed);
-      xAxis(XSyrupLocation, XSpeed);
-      //syrup(1, 30000);
-      syrup(1, 3000);
+    //mix
+    xAxis(XMixerLocation, XSpeed);
+    yAxis(YSmallCupLocation, YSpeed);
+    mixer(50, 10000);
       
-      //mix
-      xAxis(XMixerLocation, XSpeed);
-      yAxis(YSmallCupLocation, YSpeed);
-      mixer(50, 10000);
+    //cap dispense
+    xAxis(XCapLocation, XSpeed);
+    yAxis(YCapLocation, YSpeed);
+    capDispenser.setSpeed(300);
+    capDispenser.step(-StepsRequired/2);
+    //capDispenser.setSpeed(0);//test this first
+    //digitalWrite(37, LOW);
+    //digitalWrite(34, LOW);
+    //digitalWrite(35, LOW);
+    //digitalWrite(36, LOW);
+    yAxis(0,YSpeed);
       
-      //cap dispense
-      xAxis(XCapLocation, XSpeed);
-      yAxis(YCapLocation, YSpeed);
-      capDispenser.setSpeed(300);
-      capDispenser.step(-StepsRequired/2);
-      //capDispenser.setSpeed(0);//test this first
-      //digitalWrite(37, LOW);
-      //digitalWrite(34, LOW);
-      //digitalWrite(35, LOW);
-      //digitalWrite(36, LOW);
-      yAxis(0,YSpeed);
+    //cap press
+    xAxis(XPressLocation, XSpeed);
+    delay(1000);
       
-      //cap press
-      xAxis(XPressLocation, XSpeed);
-      delay(1000);
-      
-      gripperServo.write(GripperOpen);
-      
-      capPress(PressLargeCup);
-      capPress(PressMax);
-      calibration = 7;
-      }
-      /*
-      if(calibration == 7){
-      xAxis(XBigCupLocation, XSpeed);
-      gripperServo.write(GripperPartialOpen);
-      yAxis(YBigCupLocation, YSpeed);
-      gripperServo.write(GripperClose);
-      delay(1000);
-      yAxis(YBigCupLocation+200, YSpeed);
-      digitalWrite(LargeCup, HIGH);
-      //delay(110);
-      yAxis(YBigCupLocation, YSpeed);
-      digitalWrite(LargeCup, LOW);
-      //delay(1000);
-      
-      //add syrup
-      yAxis(0, YSpeed);
-      }
-      */
-    }
+    gripperServo.write(GripperOpen);
+    
+    capPress(PressLargeCup);
+    capPress(PressMax);
+    calibration = 7;
   }
+  /*
+    if(calibration == 7){
+    xAxis(XBigCupLocation, XSpeed);
+    gripperServo.write(GripperPartialOpen);
+    yAxis(YBigCupLocation, YSpeed);
+    gripperServo.write(GripperClose);
+    delay(1000);
+    yAxis(YBigCupLocation+200, YSpeed);
+    digitalWrite(LargeCup, HIGH);
+    //delay(110);
+    yAxis(YBigCupLocation, YSpeed);
+    digitalWrite(LargeCup, LOW);
+    //delay(1000);
+    
+    //add syrup
+    yAxis(0, YSpeed);
+    }
+    */
 }
 
 /*********************************************************
