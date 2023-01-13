@@ -12,10 +12,11 @@ int ySwitch = 0;
 const int XSwitchInput = 46;
 int xSwitch = 0;
 //Stepper
-const int XDir = 7;
-const int XStep = 6;
+const int XDir = 6;
+const int XStep = 7;
 const int YDir = 12;
 const int YStep = 4;
+const int YEnable = 38;
 //Cup Dispensers
 const int LargeCup = 52;
 const int SmallCup = 23;
@@ -41,9 +42,9 @@ const float GEAR_RED = 64;
 const float STEPS_PER_OUT_REV = STEPS_PER_REV*GEAR_RED;
 int StepsRequired;
 short wormGearPointer = 0;
-Stepper wormGearOne(STEPS_PER_REV, 38, 42, 40, 44);
-Stepper wormGearTwo(STEPS_PER_REV, 37, 34, 35, 36);
-Stepper wormGearThree(STEPS_PER_REV, 39, 43, 41, 45);
+//Stepper wormGearOne(STEPS_PER_REV, 38, 42, 40, 44);
+Stepper capDispenser(STEPS_PER_REV, 38, 42, 40, 44);//37, 34, 35, 36);
+//Stepper wormGearThree(STEPS_PER_REV, 39, 43, 41, 45);
 
 
 /*********************************
@@ -51,23 +52,23 @@ Stepper wormGearThree(STEPS_PER_REV, 39, 43, 41, 45);
  *********************************/
 int xLocation = 0;
 long yLocation = 0;
-short calibration = 6;
+short calibration = 0;
 short count = 0;
 //const int yMax = 5850;
 const long YMax = 5725; // speed 1000
 const int XMax = 500; // speed 10000
 int stepSpeed = 1000;
-const int XSpeed = 10000;
+const int XSpeed = 1500;
 const int YSpeed = 1000;
 
 /*************************
  *       locations       *
  *************************/
 //Gripper
-const int GripperPartialOpen = 82;//70
+const int GripperPartialOpen = 77;//70
 const int GripperOpen = 170;//150
 const int GripperClose = 65;//30
-const int GripperFullClose = 60;//30
+const int GripperFullClose = 65;//30
 //Cap Press
 const float PressMax = 957.0;
 const float PressStart = 0.0;//
@@ -75,15 +76,15 @@ const float PressLargeCup = 25.0;
 const float PressSmallCup = 2.0;
 const float PressMin = 1.09;
 //Stepper Motors
-const int XBigCupLocation = 29; // speed 10000  ^
-const int YBigCupLocation = 3550; // speed 1000  ^
-const int XSmallCupLocation = 87 ; // speed 10000
+const int XBigCupLocation = 103; // speed 10000  ^
+const int YBigCupLocation = 3650; // speed 1000  ^
+const int XSmallCupLocation = 362; // speed 10000
 const int YSmallCupLocation = 2850; // speed 1000
-const int XSyrupLocation = 150; // speed 10000
-const int XPressLocation = 327; // speed 10000
-const int XCapLocation = 420; // speed 10000
+const int XSyrupLocation = 510; // speed 10000
+const int XPressLocation = 1315; // speed 10000
+const int XCapLocation = 1660; // speed 10000
 const int YCapLocation = 400;//2300; //speed 1000
-const int XMixerLocation = 503; // speed 10000  ^
+const int XMixerLocation = 2008; // speed 10000  ^
 const int YMixerLocation = 4485;  // speed 1000
 
 
@@ -101,7 +102,7 @@ void setup() {
   
   //Gripper
     gripperServo.attach(21);
-    gripperServo.write(GripperOpen);
+    //gripperServo.write(GripperOpen);
     //45-75
     
     /***********************
@@ -112,6 +113,7 @@ void setup() {
     pinMode(YSwitchInput, INPUT);
     pinMode(XDir, OUTPUT);
     pinMode(XStep, OUTPUT);
+    pinMode(YEnable, OUTPUT);
     pinMode(YDir, OUTPUT);
     pinMode(YStep, OUTPUT);
     //Cap Press
@@ -138,6 +140,7 @@ void setup() {
     //Stepper Motors
     digitalWrite(XDir, LOW);
     digitalWrite(XStep, LOW);
+    digitalWrite(YEnable, HIGH);
     digitalWrite(YDir, LOW);
     digitalWrite(YStep, LOW);
     //Cap Press
@@ -148,6 +151,10 @@ void setup() {
 //    digitalWrite(CapDispenser, LOW);
     digitalWrite(LargeCup, LOW);
     digitalWrite(SmallCup, LOW);
+    digitalWrite(34, LOW);
+    digitalWrite(35, LOW);
+    digitalWrite(36, LOW);
+    digitalWrite(37, LOW);
     //Syrup
     analogWrite(SyrupOnePWM, 0);
     digitalWrite(SyrupOneIn, LOW);
@@ -156,6 +163,7 @@ void setup() {
     analogWrite(MixerPWM, 0);
     digitalWrite(MixerCW, LOW);
     digitalWrite(MixerCCW, LOW);
+    
 }
 
 /***********************************
@@ -173,8 +181,8 @@ void syrup(int, int);
 //Mixer
 void mixer(int, int);
 //capDispenser
-void capDispenser(short);
-void capDispenser(int, int);
+//void capDispenser(short);
+//void capDispenser(int, int);
 
 void loop() {
   while(xLocation <= XMax){
@@ -193,13 +201,15 @@ void loop() {
     if(calibration == 0){
       capPress(100);
       capPress(PressMax);
+      Serial.println("testOne");
       calibration = 1;
     }
     if(calibration == 1){
+      Serial.println("testTwo");
       StepsRequired = STEPS_PER_OUT_REV;
-      wormGearOne.setSpeed(300);
-      wormGearTwo.setSpeed(300);
-      wormGearThree.setSpeed(300);
+      capDispenser.setSpeed(300);
+      Serial.println("testThree");
+      capDispenser.step(-StepsRequired/2);
       //calibrate cap dispenser steppers;
       /*
       steppermotor.step(-StepsRequired/2);
@@ -212,6 +222,7 @@ void loop() {
     if(calibration == 2){
           Serial.println("Stepper Calibration");
     Serial.println(calibration);
+            digitalWrite(YEnable, LOW);
             digitalWrite(YDir, LOW);
             digitalWrite(YStep, HIGH);
             delayMicroseconds(10);
@@ -226,6 +237,7 @@ void loop() {
     }
     if(count == 3){
       count = 0;
+      digitalWrite(YEnable, LOW);
       calibration = 3;
       Serial.println("stop");
     }
@@ -248,11 +260,11 @@ void loop() {
       gripperServo.write(GripperFullClose);
       if(xSwitch == LOW){
         Serial.println("please");
-            digitalWrite(XDir, HIGH);
+            digitalWrite(XDir, LOW);
             digitalWrite(XStep, HIGH);
-            delayMicroseconds(10000);
+            delayMicroseconds(100);
             digitalWrite(XStep, LOW);
-            delayMicroseconds(10000);
+            delayMicroseconds(100);
             Serial.println(xSwitch);
       }
       Serial.println("test");
@@ -268,13 +280,9 @@ void loop() {
      * 
      **********************/
     if(calibration == 6){
-      StepsRequired = STEPS_PER_OUT_REV;
-      wormGearOne.setSpeed(300);
-      delay(1000);
       /******************************
        *       grab large cup       *
        ******************************/
-       /*
       calibration = 7; 
       xAxis(XBigCupLocation, XSpeed);
       gripperServo.write(GripperPartialOpen);
@@ -290,37 +298,36 @@ void loop() {
       
       //add syrup
       yAxis(0, YSpeed);
-      /*
       xAxis(XSyrupLocation, XSpeed);
-      syrup(1, 30000);
+      //syrup(1, 30000);
+      syrup(1, 3000);
       
       //mix
       xAxis(XMixerLocation, XSpeed);
       yAxis(YSmallCupLocation, YSpeed);
       mixer(50, 10000);
-      */
+      
       //cap dispense
-      /*
       xAxis(XCapLocation, XSpeed);
       yAxis(YCapLocation, YSpeed);
-      */
-//      digitalWrite(CapDispenser, HIGH);
-//      delay(50);
-//      digitalWrite(CapDispenser, LOW);
-//      delay(1000);
-      capDispenser(1);
-      /*
-      //capDispenser(1, 600);
+      capDispenser.setSpeed(300);
+      capDispenser.step(-StepsRequired/2);
+      //capDispenser.setSpeed(0);//test this first
+      //digitalWrite(37, LOW);
+      //digitalWrite(34, LOW);
+      //digitalWrite(35, LOW);
+      //digitalWrite(36, LOW);
       yAxis(0,YSpeed);
       
       //cap press
-      xAxis(XPressLocation, XSpeed);//
+      xAxis(XPressLocation, XSpeed);
+      delay(1000);
+      
       gripperServo.write(GripperOpen);
       
       capPress(PressLargeCup);
       capPress(PressMax);
       calibration = 7;
-      */
       }
       /*
       if(calibration == 7){
@@ -356,7 +363,7 @@ void loop() {
 void xStepper(char dir, long steps, int stepSpeed){
   if(dir == 'R'){
     for(int i = 0; i < steps; i++){
-              digitalWrite(XDir, HIGH);
+              digitalWrite(XDir, LOW);
               digitalWrite(XStep, HIGH);
               delayMicroseconds(stepSpeed);
               digitalWrite(XStep, LOW);
@@ -366,7 +373,7 @@ void xStepper(char dir, long steps, int stepSpeed){
   }
   if(dir == 'F'){
     for(int i = 0; i < steps; i++){
-              digitalWrite(XDir, LOW);
+              digitalWrite(XDir, HIGH);
               digitalWrite(XStep, HIGH);
               delayMicroseconds(stepSpeed);
               digitalWrite(XStep, LOW);
@@ -378,6 +385,7 @@ void xStepper(char dir, long steps, int stepSpeed){
 }
 
 void yStepper(char dir, long steps, int stepSpeed){
+    digitalWrite(YEnable, LOW);
     if(dir == 'F'){
     for(int i = 0; i < steps; i++){
               digitalWrite(YDir, HIGH);
@@ -398,6 +406,7 @@ void yStepper(char dir, long steps, int stepSpeed){
     }
     yLocation -= steps;
   }
+  digitalWrite(YEnable, HIGH);
   return;
 }
 
@@ -405,6 +414,7 @@ void yAxis(long location, int stepSpeed){
   if(yLocation == location){
     return;
   }
+  digitalWrite(YEnable, LOW);
   if(yLocation < location){
       for(int i = 0; i < (location-yLocation); i++){
               digitalWrite(YDir, HIGH);
@@ -425,6 +435,7 @@ void yAxis(long location, int stepSpeed){
       }
           yLocation -= yLocation-location;
     }
+    digitalWrite(YEnable, HIGH);
     return;
 }
 void xAxis(long location, int stepSpeed){
@@ -433,7 +444,7 @@ void xAxis(long location, int stepSpeed){
   }
   if(xLocation < location){
     for(int i = 0; i < (location-xLocation); i++){
-              digitalWrite(XDir, LOW);
+              digitalWrite(XDir, HIGH);
               digitalWrite(XStep, HIGH);
               delayMicroseconds(stepSpeed);
               digitalWrite(XStep, LOW);
@@ -443,7 +454,7 @@ void xAxis(long location, int stepSpeed){
   }
     if(xLocation > location){
     for(int i = 0; i < (xLocation-location); i++){
-              digitalWrite(XDir,HIGH);
+              digitalWrite(XDir,LOW);
               digitalWrite(XStep, HIGH);
               delayMicroseconds(stepSpeed);
               digitalWrite(XStep, LOW);
@@ -565,6 +576,7 @@ void mixer(int power, int timer){
 /*********************
  *   Cap Dispenser   *
  *********************/
+ /*
  void capDispenser(int caps){
   Serial.println("test");
     for(int i = 0; i < StepsRequired*caps; i++){
@@ -591,6 +603,7 @@ void mixer(int power, int timer){
     }
     return;
  }
+
  void capDispenser(short caps, int spede){
   wormGearOne.setSpeed(spede);
   wormGearTwo.setSpeed(spede);
@@ -644,3 +657,4 @@ void mixer(int power, int timer){
     }
     return;
  }
+ */
