@@ -65,7 +65,7 @@ const int YSpeed = 1000;
  *       locations       *
  *************************/
 //Gripper
-const int GripperPartialOpen = 80;//70
+const int GripperPartialOpen = 90;//70
 const int GripperOpen = 170;//150
 const int GripperClose = 65;//30
 const int GripperFullClose = 65;//30
@@ -77,15 +77,17 @@ const float PressSmallCup = 2.0;
 const float PressMin = 1.09;
 //Stepper Motors
 const int XBigCupLocation = 103; // speed 10000  ^
-const int YBigCupLocation = 3650; // speed 1000  ^
+const int YBigCupLocation = 3700; // speed 1000  ^
 const int XSmallCupLocation = 362; // speed 10000
 const int YSmallCupLocation = 2850; // speed 1000
 const int XSyrupLocation = 510; // speed 10000
-const int XPressLocation = 1315; // speed 10000
+const int XMixerLocation = 1358; // speed 10000  ^
+const int YMixerLocation = 3000;  // speed 1000
 const int XCapLocation = 1660; // speed 10000
 const int YCapLocation = 400;//2300; //speed 1000
-const int XMixerLocation = 2008; // speed 10000  ^
-const int YMixerLocation = 4485;  // speed 1000
+const int XPresssStopLocation = 1855; // speed 10000'
+const int YPressLocation = 600;//2300; //speed 1000
+const int XPressLocation = 2008; // speed 10000
 
 
 /*************************
@@ -197,15 +199,18 @@ void loop() {
   *                                  *
   ***********************************/
   if(calibration == 0){
+    /*
     capPress(100);
     capPress(PressMax);
     Serial.println("testOne");
+    */
     calibration = 1;
   }
   if(calibration == 1){
     Serial.println("testTwo");
     StepsRequired = STEPS_PER_OUT_REV;
     capDispenser.setSpeed(300);
+    /*
     Serial.println("testThree");
     capDispenser.step(-StepsRequired/2);
     //calibrate cap dispenser steppers;
@@ -299,11 +304,11 @@ void loop() {
     xAxis(XSyrupLocation, XSpeed);
     //syrup(1, 30000);
     syrup(1, 3000);
-      
     //mix
     xAxis(XMixerLocation, XSpeed);
-    yAxis(YSmallCupLocation, YSpeed);
+    yAxis(YMixerLocation, YSpeed);
     mixer(50, 10000);
+    //yAxis(0, YSpeed);
       
     //cap dispense
     xAxis(XCapLocation, XSpeed);
@@ -318,9 +323,12 @@ void loop() {
     yAxis(0,YSpeed);
       
     //cap press
+    xAxis(XPresssStopLocation, XSpeed);
+    yAxis(YPressLocation,YSpeed);
     xAxis(XPressLocation, XSpeed);
-    delay(1000);
-      
+    delay(5000);
+    gripperServo.write(GripperPartialOpen);
+    yAxis(0, YSpeed);
     gripperServo.write(GripperOpen);
     
     capPress(PressLargeCup);
