@@ -228,9 +228,9 @@ void loop() {
     digitalWrite(YEnable, LOW);
     digitalWrite(YDir, LOW);
     digitalWrite(YStep, HIGH);
-    delayMicroseconds(10);
+    delayMicroseconds(100);
     digitalWrite(YStep, LOW);
-    delayMicroseconds(10);
+//    delayMicroseconds(100); //brgk bg
     Serial.println(ySwitch);
     if(ySwitch == LOW){
       count = 0;
@@ -267,7 +267,7 @@ void loop() {
       digitalWrite(XStep, HIGH);
       delayMicroseconds(100);
       digitalWrite(XStep, LOW);
-      delayMicroseconds(100);
+//      delayMicroseconds(100);
       Serial.println(xSwitch);
     }
     Serial.println("test");
