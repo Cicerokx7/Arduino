@@ -57,9 +57,8 @@ short count = 0;
 //const int yMax = 5850;
 const long YMax = 5725; // speed 1000
 const int XMax = 500; // speed 10000
-int stepSpeed = 1000;
 const int XSpeed = 1500;
-const int YSpeed = 1000;
+const int YSpeed = 675;//can run at least 625 speed but strength and reliability become impractical
 
 /*************************
  *       locations       *
@@ -228,9 +227,8 @@ void loop() {
     digitalWrite(YEnable, LOW);
     digitalWrite(YDir, LOW);
     digitalWrite(YStep, HIGH);
-    delayMicroseconds(100);
+    delayMicroseconds(500);
     digitalWrite(YStep, LOW);
-//    delayMicroseconds(100); //brgk bg
     Serial.println(ySwitch);
     if(ySwitch == LOW){
       count = 0;
