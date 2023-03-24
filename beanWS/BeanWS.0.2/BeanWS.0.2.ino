@@ -75,7 +75,7 @@ const float PressLargeCup = 15.0;
 const float PressSmallCup = 2.0;
 const float PressMin = 1.09;
 //Stepper Motors
-const int XBigCupLocation = 103; // speed 10000  ^
+const int XBigCupLocation = 42; // speed 10000  ^
 const int YBigCupLocation = 3700; // speed 1000  ^
 const int XSmallCupLocation = 362; // speed 10000
 const int YSmallCupLocation = 2850; // speed 1000
@@ -226,9 +226,12 @@ void loop() {
     Serial.println(calibration);
     digitalWrite(YEnable, LOW);
     digitalWrite(YDir, LOW);
-    digitalWrite(YStep, HIGH);
-    delayMicroseconds(500);
-    digitalWrite(YStep, LOW);
+    for(int i = 0; i < 50; i++){
+      digitalWrite(YStep, HIGH);
+      delayMicroseconds(YSpeed);
+      digitalWrite(YStep, LOW);
+      delayMicroseconds(YSpeed);
+    }
     Serial.println(ySwitch);
     if(ySwitch == LOW){
       count = 0;
