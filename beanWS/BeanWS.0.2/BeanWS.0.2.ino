@@ -70,23 +70,23 @@ const int GripperClose = 65;//30
 const int GripperFullClose = 65;//30
 //Cap Press
 const float PressMax = 957.0;
-const float PressStart = 0.0;//
+const float PressStart = 0.0;
 const float PressLargeCup = 15.0;
 const float PressSmallCup = 2.0;
 const float PressMin = 1.09;
 //Stepper Motors
-const int XBigCupLocation = 42; // speed 10000  ^
+const int XBigCupLocation = 40; // speed 10000  ^
 const int YBigCupLocation = 3700; // speed 1000  ^
 const int XSmallCupLocation = 362; // speed 10000
 const int YSmallCupLocation = 2850; // speed 1000
-const int XSyrupLocation = 510; // speed 10000
-const int XMixerLocation = 1358; // speed 10000  ^
+const int XSyrupLocation = 475; // speed 10000
+const int XMixerLocation = 1300; // speed 10000  ^
 const int YMixerLocation = 3000;  // speed 1000
-const int XCapLocation = 1660; // speed 10000
-const int YCapLocation = 400;//2300; //speed 1000
-const int XPresssStopLocation = 1855; // speed 10000'
+const int XCapLocation = 1580; // speed 10000
+const int YCapLocation = 380;//2300; //speed 1000
+const int XPresssStopLocation = 1775; // speed 10000'
 const int YPressLocation = 600;//2300; //speed 1000
-const int XPressLocation = 2008; // speed 10000
+const int XPressLocation = 1950; // speed 10000
 
 
 /*************************
@@ -311,17 +311,17 @@ void loop() {
     mixer(50, 10000);
     //yAxis(0, YSpeed);
       
-    //cap dispense
-    xAxis(XCapLocation, XSpeed);
-    yAxis(YCapLocation, YSpeed);
-    capDispenser.setSpeed(300);
-    capDispenser.step(-StepsRequired/2);
-    //capDispenser.setSpeed(0);//test this first
-    //digitalWrite(37, LOW);
-    //digitalWrite(34, LOW);
-    //digitalWrite(35, LOW);
-    //digitalWrite(36, LOW);
-    yAxis(0,YSpeed);
+//    //cap dispense
+//    xAxis(XCapLocation, XSpeed);
+//    yAxis(YCapLocation, YSpeed);
+//    capDispenser.setSpeed(300);
+//    capDispenser.step(-StepsRequired/2);
+//    //capDispenser.setSpeed(0);//test this first
+//    //digitalWrite(37, LOW);
+//    //digitalWrite(34, LOW);
+//    //digitalWrite(35, LOW);
+//    //digitalWrite(36, LOW);
+//    yAxis(0,YSpeed);
       
     //cap press
     xAxis(XPresssStopLocation, XSpeed);
