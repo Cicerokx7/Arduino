@@ -75,18 +75,18 @@ const float PressLargeCup = 15.0;
 const float PressSmallCup = 2.0;
 const float PressMin = 1.09;
 //Stepper Motors
-const int XBigCupLocation = 40; // speed 10000  ^
+const int XBigCupLocation = 65; // speed 10000  ^
 const int YBigCupLocation = 3700; // speed 1000  ^
 const int XSmallCupLocation = 362; // speed 10000
 const int YSmallCupLocation = 2850; // speed 1000
 const int XSyrupLocation = 475; // speed 10000
-const int XMixerLocation = 1300; // speed 10000  ^
+const int XMixerLocation = 1325; // speed 10000  ^
 const int YMixerLocation = 3000;  // speed 1000
-const int XCapLocation = 1580; // speed 10000
+const int XCapLocation = 1625; // speed 10000
 const int YCapLocation = 380;//2300; //speed 1000
-const int XPresssStopLocation = 1775; // speed 10000'
+const int XPresssStopLocation = 1825; // speed 10000'
 const int YPressLocation = 600;//2300; //speed 1000
-const int XPressLocation = 1950; // speed 10000
+const int XPressLocation = 2000; // speed 10000
 
 
 /*************************
@@ -206,7 +206,7 @@ void loop() {
     calibration = 1;
   }
   if(calibration == 1){
-    Serial.println("testTwo");
+//    Serial.println("testTwo");
     StepsRequired = STEPS_PER_OUT_REV;
     capDispenser.setSpeed(300);
     /*
@@ -222,8 +222,8 @@ void loop() {
     calibration = 2;
   }
   if(calibration == 2){
-    Serial.println("Stepper Calibration");
-    Serial.println(calibration);
+//    Serial.println("Stepper Calibration");
+//    Serial.println(calibration);
     digitalWrite(YEnable, LOW);
     digitalWrite(YDir, LOW);
     for(int i = 0; i < 50; i++){
@@ -232,7 +232,7 @@ void loop() {
       digitalWrite(YStep, LOW);
       delayMicroseconds(YSpeed);
     }
-    Serial.println(ySwitch);
+//    Serial.println(ySwitch);
     if(ySwitch == LOW){
       count = 0;
     }
@@ -243,19 +243,19 @@ void loop() {
       count = 0;
       digitalWrite(YEnable, LOW);
       calibration = 3;
-      Serial.println("stop");
+//      Serial.println("stop");
     }
   }
     //press setup
   if(calibration == 3){
-    Serial.println("Stepper Calibration");
-    Serial.println(calibration);
+//    Serial.println("Stepper Calibration");
+//    Serial.println(calibration);
     calibration = 4;
   }
   //y axis setup
   if(calibration == 4){
-    Serial.println("Stepper Calibration");
-    Serial.println(calibration);
+//    Serial.println("Stepper Calibration");
+//    Serial.println(calibration);
     delay(1000);
     calibration = 5;
   }
@@ -263,15 +263,15 @@ void loop() {
   if(calibration == 5){
     gripperServo.write(GripperFullClose);
     if(xSwitch == LOW){
-      Serial.println("please");
+//      Serial.println("please");
       digitalWrite(XDir, LOW);
       digitalWrite(XStep, HIGH);
-      delayMicroseconds(100);
+      delayMicroseconds(XSpeed*2);
       digitalWrite(XStep, LOW);
-//      delayMicroseconds(100);
-      Serial.println(xSwitch);
+      delayMicroseconds(XSpeed*2);
+//      Serial.println(xSwitch);
     }
-    Serial.println("test");
+//    Serial.println("test");
     if(xSwitch == HIGH){
       calibration = 6;
       gripperServo.write(GripperFullClose);
@@ -311,17 +311,17 @@ void loop() {
     mixer(50, 10000);
     //yAxis(0, YSpeed);
       
-//    //cap dispense
-//    xAxis(XCapLocation, XSpeed);
-//    yAxis(YCapLocation, YSpeed);
-//    capDispenser.setSpeed(300);
-//    capDispenser.step(-StepsRequired/2);
-//    //capDispenser.setSpeed(0);//test this first
-//    //digitalWrite(37, LOW);
-//    //digitalWrite(34, LOW);
-//    //digitalWrite(35, LOW);
-//    //digitalWrite(36, LOW);
-//    yAxis(0,YSpeed);
+    //cap dispense
+    xAxis(XCapLocation, XSpeed);
+    yAxis(YCapLocation, YSpeed);
+    capDispenser.setSpeed(300);
+    capDispenser.step(-StepsRequired/2);
+    //capDispenser.setSpeed(0);//test this first
+    //digitalWrite(37, LOW);
+    //digitalWrite(34, LOW);
+    //digitalWrite(35, LOW);
+    //digitalWrite(36, LOW);
+    yAxis(0,YSpeed);
       
     //cap press
     xAxis(XPresssStopLocation, XSpeed);
@@ -444,11 +444,12 @@ void yAxis(long location, int stepSpeed){
     return;
 }
 void xAxis(long location, int stepSpeed){
-    if(xLocation == location){
+  if(xLocation == location){
     return;
   }
   if(xLocation < location){
     for(int i = 0; i < (location-xLocation); i++){
+//              Serial.println(xLocation);
               digitalWrite(XDir, HIGH);
               digitalWrite(XStep, HIGH);
               delayMicroseconds(stepSpeed);
@@ -459,6 +460,7 @@ void xAxis(long location, int stepSpeed){
   }
     if(xLocation > location){
     for(int i = 0; i < (xLocation-location); i++){
+//              Serial.println(xLocation);
               digitalWrite(XDir,LOW);
               digitalWrite(XStep, HIGH);
               delayMicroseconds(stepSpeed);
@@ -467,6 +469,7 @@ void xAxis(long location, int stepSpeed){
     }
     xLocation -= xLocation-location;
   }
+  Serial.println(xLocation);
   return;
 }
 
@@ -477,7 +480,7 @@ void xAxis(long location, int stepSpeed){
   while(pressCount < 600){
   pressLocation = analogRead(PressLocationInput);
     pressLocationCount += pressLocation;
-    Serial.println(pressCount);
+//    Serial.println(pressCount);
     pressCount ++;
     if(pressCount == 500){
       pressLoc = pressLocationCount/500.0;
@@ -485,9 +488,9 @@ void xAxis(long location, int stepSpeed){
       pressCount = 0;
   if(pressLoc < location){
     while(pressLoc < location){
-      Serial.print(location);
-      Serial.print(", ");
-      Serial.println(pressLoc);
+//      Serial.print(location);
+//      Serial.print(", ");
+//      Serial.println(pressLoc);
       pressLocation = analogRead(PressLocationInput);
       if(pressCount == 100){
        pressLoc = pressLocationCount/100.0;
@@ -509,9 +512,9 @@ void xAxis(long location, int stepSpeed){
   }
   else if(pressLoc > location){
     while(pressLoc > location){
-      Serial.print(location);
-      Serial.print(", ");
-      Serial.println(pressLoc);
+//      Serial.print(location);
+//      Serial.print(", ");
+//      Serial.println(pressLoc);
       pressLocation = analogRead(PressLocationInput);
        if(pressCount == 100){
          pressLoc = pressLocationCount/100.0;
@@ -557,7 +560,7 @@ void xAxis(long location, int stepSpeed){
       digitalWrite(SyrupOneIn, LOW);
       break;
      default:
-      Serial.println("ERROR");
+//      Serial.println("ERROR");
       break;
   }
   return;
