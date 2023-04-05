@@ -64,7 +64,7 @@ const int YSpeed = 675;//can run at least 625 speed but strength and reliability
  *       locations       *
  *************************/
 //Gripper
-const int GripperPartialOpen = 90;//70
+const int GripperPartialOpen = 80;//70
 const int GripperOpen = 170;//150
 const int GripperClose = 65;//30
 const int GripperFullClose = 65;//30
@@ -75,12 +75,12 @@ const float PressLargeCup = 15.0;
 const float PressSmallCup = 2.0;
 const float PressMin = 1.09;
 //Stepper Motors
-const int XBigCupLocation = 65; // speed 10000  ^
+const int XBigCupLocation = 40; // speed 10000  ^
 const int YBigCupLocation = 3700; // speed 1000  ^
 const int XSmallCupLocation = 362; // speed 10000
 const int YSmallCupLocation = 2850; // speed 1000
 const int XSyrupLocation = 475; // speed 10000
-const int XMixerLocation = 1325; // speed 10000  ^
+const int XMixerLocation = 1280; // speed 10000  ^
 const int YMixerLocation = 3000;  // speed 1000
 const int XCapLocation = 1625; // speed 10000
 const int YCapLocation = 380;//2300; //speed 1000
