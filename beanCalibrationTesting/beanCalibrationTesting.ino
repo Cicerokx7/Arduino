@@ -75,18 +75,18 @@ const float PressLargeCup = 15.0;
 const float PressSmallCup = 2.0;
 const float PressMin = 1.09;
 //Stepper Motors
-const int XBigCupLocation = 40; // speed 10000  ^
+const int XBigCupLocation = 45; // speed 10000  ^
 const int YBigCupLocation = 3700; // speed 1000  ^
-const int XSmallCupLocation = 362; // speed 10000
-const int YSmallCupLocation = 2850; // speed 1000
-const int XSyrupLocation = 475; // speed 10000
-const int XMixerLocation = 1280; // speed 10000  ^
+const int XSmallCupLocation = 315; // speed 10000
+const int YSmallCupLocation = 3190; // speed 1000
+const int XSyrupLocation = 456; // speed 10000
+const int XMixerLocation = 1290; // speed 10000  ^
 const int YMixerLocation = 3000;  // speed 1000
-const int XCapLocation = 1625; // speed 10000
+const int XCapLocation = 1590; // speed 10000
 const int YCapLocation = 380;//2300; //speed 1000
 const int XPresssStopLocation = 1825; // speed 10000'
 const int YPressLocation = 600;//2300; //speed 1000
-const int XPressLocation = 2000; // speed 10000
+const int XPressLocation = 2041; // speed 10000
 
 
 /*************************
@@ -289,122 +289,119 @@ void loop() {
      * 
      **********************/
   if(calibration == 6){
-    String readString;
-String Q;
- while (Serial.available()){
-  delay(1);
-  if(Serial.available()>0){
-  char c = Serial.read();
-   if (isControl(c)){
-  break;
-  }
-   readString += c;
-  }
- 
- }
-
- Q = readString;
-    while(Q != "QUIT"){
-      if(Q == "xpc"){
-        x += 100;
-      }
-      else if(Q == "xpl"){
-        x += 50;
-      }
-      else if(Q == "xpx"){
-        x += 10;
-      }
-      else if(Q == "xpv"){
-        x += 5;
-      }
-      else if(Q == "xpi"){
-        x += 1;
-      }
-      else if(Q == "xmc"){
-        x -= 100;
-      }
-      else if(Q == "xml"){
-        x -= 50;
-      }
-      else if(Q == "xmx"){
-        x -= 10;
-      }
-      else if(Q == "xmv"){
-        x -= 5;
-      }
-      else if(Q == "xmi"){
-        x -= 1;
-      }
-      else if(Q == "ypm"){
-        y += 1000;
-      }
-      else if(Q == "ypd"){
-        y += 500;
-      }
-      else if(Q == "ypc"){
-        y += 100;
-      }
-      else if(Q == "ypl"){
-        y += 50;
-      }
-      else if(Q == "ypx"){
-        y += 10;
-      }
-      else if(Q == "ypv"){
-        y += 5;
-      }
-      else if(Q == "ypi"){
-        y += 1;
-      }
-      else if(Q == "ymm"){
-        y -= 1000;
-      }
-      else if(Q == "ymd"){
-        y -= 500;
-      }
-      else if(Q == "ymc"){
-        y -= 100;
-      }
-      else if(Q == "yml"){
-        y -= 50;
-      }
-      else if(Q == "ymx"){
-        y -= 10;
-      }
-      else if(Q == "ymv"){
-        y -= 5;
-      }
-      else if(Q == "ymi"){
-        y -= 1;
-      }
-      else if(Q == "x"){
+    String naim = "";  
+    String Mobile = "";  
+    String Address = "";  
+    String Email = "";  
+    String Q = "";
+    int val = 0;
+    Serial.println("Enter your Moblie No.");  
+    while (Serial.available() == 0) {}  
+    Q = Serial.readString();
+    Serial.print(Q);
+//    String Q;
+//    while (Serial.available()){
+//      Q = Serial.read();
+//    }
+//      Serial.println("Enter command:");
+//      Serial.println(Q);
+//      if(Q == "xpc"){
+//        x += 100;
+//      }
+//      else if(Q == "xpl"){
+//        x += 50;
+//      }
+//      else if(Q == "xpx"){
+//        x += 10;
+//      }
+//      else if(Q == "xpv"){
+//        x += 5;
+//      }
+//      else if(Q == "xpi"){
+//        x += 1;
+//      }
+//      else if(Q == "xmc"){
+//        x -= 100;
+//      }
+//      else if(Q == "xml"){
+//        x -= 50;
+//      }
+//      else if(Q == "xmx"){
+//        x -= 10;
+//      }
+//      else if(Q == "xmv"){
+//        x -= 5;
+//      }
+//      else if(Q == "xmi"){
+//        x -= 1;
+//      }
+//      else if(Q == "ypm"){
+//        y += 1000;
+//      }
+//      else if(Q == "ypd"){
+//        y += 500;
+//      }
+//      else if(Q == "ypc"){
+//        y += 100;
+//      }
+//      else if(Q == "ypl"){
+//        y += 50;
+//      }
+//      else if(Q == "ypx"){
+//        y += 10;
+//      }
+//      else if(Q == "ypv"){
+//        y += 5;
+//      }
+//      else if(Q == "ypi"){
+//        y += 1;
+//      }
+//      else if(Q == "ymm"){
+//        y -= 1000;
+//      }
+//      else if(Q == "ymd"){
+//        y -= 500;
+//      }
+//      else if(Q == "ymc"){
+//        y -= 100;
+//      }
+//      else if(Q == "yml"){
+//        y -= 50;
+//      }
+//      else if(Q == "ymx"){
+//        y -= 10;
+//      }
+//      else if(Q == "ymv"){
+//        y -= 5;
+//      }
+//      else if(Q == "ymi"){
+//        y -= 1;
+//      }
+      val = Q.toInt();
+      if(val == 1){
         state = 1;
       }
-      else if(Q == "y"){
+      else if(val == 2){
         state = 2;
       }
-
       if(state == 1){
-        if(Q != "quit" && Q != "y"){
-          x += Q.toInt();
+        Serial.println("In X");
+        if(val != 0){
+          x += val;
         }
-        else if(Q == "y"){
+        else if(val == 0){
+          Serial.println("In Y");
           state = 2;
         }
-        else{
-          state = 0;
-        }
       }
-      
-      if(state == 2){
-        if(Q != "quit" && Q != "x"){
-          y += Q.toInt();
+      else if(state == 2){
+        Serial.println("In Y");
+        if(val != 0){
+          y += val;
         }
-        else if(Q == "x"){
+        else if(val == 0){
+          Serial.println("In X");
           state = 1;
-        }
-        else{
-          state = 0;
         }
       }
       if(xPast != x || yPast != y){
@@ -419,7 +416,6 @@ String Q;
         else{
           yAxis(y, YSpeed);
         }
-      }
       xPast = x;
       yPast = y;
     }
