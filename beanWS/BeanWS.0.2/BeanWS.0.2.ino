@@ -75,9 +75,9 @@ const float PressLargeCup = 15.0;
 const float PressSmallCup = 2.0;
 const float PressMin = 1.09;
 //Stepper Motors
-const int XBigCupLocation = 40; // speed 10000  ^
+const int XBigCupLocation = 67; // speed 10000  ^
 const int YBigCupLocation = 3700; // speed 1000  ^
-const int XSmallCupLocation = 362; // speed 10000
+const int XSmallCupLocation = 330; // speed 10000
 const int YSmallCupLocation = 2850; // speed 1000
 const int XSyrupLocation = 475; // speed 10000
 const int XMixerLocation = 1280; // speed 10000  ^

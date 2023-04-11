@@ -295,7 +295,7 @@ void loop() {
     String Email = "";  
     String Q = "";
     int val = 0;
-    Serial.println("Enter your Moblie No.");  
+    Serial.println("Enter Command:");  
     while (Serial.available() == 0) {}  
     Q = Serial.readString();
     Serial.print(Q);
@@ -387,7 +387,7 @@ void loop() {
       if(state == 1){
         Serial.println("In X");
         if(val != 0){
-          x += val;
+          x = val;
         }
         else if(val == 0){
           Serial.println("In Y");
@@ -397,7 +397,7 @@ void loop() {
       else if(state == 2){
         Serial.println("In Y");
         if(val != 0){
-          y += val;
+          y = val;
         }
         else if(val == 0){
           Serial.println("In X");
