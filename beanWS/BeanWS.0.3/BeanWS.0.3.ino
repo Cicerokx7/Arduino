@@ -34,7 +34,7 @@ int pressLocation = 0;
 float pressLoc = 0;
 //Mixer
 const int MixerPWM = 10;
-const int MixerCW = 28;
+const int MixerCW = 28
 const int MixerCCW = 29;
 const int MixerCleaner = 5;
 //Cap Dispenser
@@ -98,6 +98,12 @@ const int XPressLocation = 1905; // speed 10000
 int mixerSpeed = 0;
 long pressLocationCount = 0;
 int pressCount = 0;
+/*************************
+ *       Resources       *
+ ************************/
+ int largeCups = 20;
+ int caps = 20;
+// int syrupOne = 1000;
 
 void setup() {
   //PC Comunication
@@ -106,7 +112,6 @@ void setup() {
   
   //Gripper
     gripperServo.attach(21);
-    //gripperServo.write(GripperOpen);
     //45-75
     
     /***********************
@@ -153,7 +158,6 @@ void setup() {
     digitalWrite(PressUp, LOW);
     digitalWrite(PressDown, LOW);
     //Dispensers
-//    digitalWrite(CapDispenser, LOW);
     digitalWrite(LargeCup, LOW);
     digitalWrite(SmallCup, LOW);
     digitalWrite(34, LOW);
@@ -186,9 +190,6 @@ void capPress(float);
 void syrup(int, int);
 //Mixer
 void mixer(int, int);
-//capDispenser
-//void capDispenser(short);
-//void capDispenser(int, int);
 
 void loop() {
   /******************************
@@ -209,24 +210,11 @@ void loop() {
     calibration = 1;
   }
   if(calibration == 1){
-//    Serial.println("testTwo");
     StepsRequired = STEPS_PER_OUT_REV;
     capDispenser.setSpeed(300);
-    /*
-    Serial.println("testThree");
-    capDispenser.step(-StepsRequired/2);
-    //calibrate cap dispenser steppers;
-    /*
-    steppermotor.step(-StepsRequired/2);
-    delay(1000);
-    steppermotor.step(-StepsRequired/2);
-    delay(5000);
-    */
     calibration = 2;
   }
   if(calibration == 2){
-//    Serial.println("Stepper Calibration");
-//    Serial.println(calibration);
     digitalWrite(YEnable, LOW);
     digitalWrite(YDir, LOW);
     for(int i = 0; i < 50; i++){
@@ -235,7 +223,6 @@ void loop() {
       digitalWrite(YStep, LOW);
       delayMicroseconds(YSpeed);
     }
-//    Serial.println(ySwitch);
     if(ySwitch == LOW){
       count = 0;
     }
@@ -246,35 +233,26 @@ void loop() {
       count = 0;
       digitalWrite(YEnable, LOW);
       calibration = 3;
-//      Serial.println("stop");
     }
   }
     //press setup
   if(calibration == 3){
-//    Serial.println("Stepper Calibration");
-//    Serial.println(calibration);
     calibration = 4;
   }
   //y axis setup
   if(calibration == 4){
-//    Serial.println("Stepper Calibration");
-//    Serial.println(calibration);
     delay(1000);
     calibration = 5;
   }
-  //x axis setup
   if(calibration == 5){
     gripperServo.write(GripperFullClose);
     if(xSwitch == LOW){
-//      Serial.println("please");
       digitalWrite(XDir, LOW);
       digitalWrite(XStep, HIGH);
       delayMicroseconds(XSpeed*2);
       digitalWrite(XStep, LOW);
       delayMicroseconds(XSpeed*2);
-//      Serial.println(xSwitch);
     }
-//    Serial.println("test");
     if(xSwitch == HIGH){
       calibration = 6;
       gripperServo.write(GripperFullClose);
@@ -287,10 +265,18 @@ void loop() {
      * 
      **********************/
   if(calibration == 6){
+    if(bigCups < 1 || caps < 1){
+      calibration = -1;
+    }
+    else{
+      calibration = 7;
+    }
+  }
+  if(calibration == 7){
     /******************************
      *       grab large cup       *
      ******************************/
-    calibration = 7; 
+    calibration = 8;
     xAxis(XBigCupLocation, XSpeed);
     gripperServo.write(GripperPartialOpen);
     yAxis(YBigCupLocation, YSpeed);
@@ -298,32 +284,25 @@ void loop() {
     delay(1000);
     yAxis(YBigCupLocation+200, YSpeed);
     digitalWrite(LargeCup, HIGH);
-    //delay(110);
     yAxis(YBigCupLocation, YSpeed);
     digitalWrite(LargeCup, LOW);
-    //delay(1000);
+    largeCups --;
     
     //add syrup
     yAxis(0, YSpeed);
     xAxis(XSyrupLocation, XSpeed);
-    //syrup(1, 30000);
     syrup(1, 3000);
     //mix
     xAxis(XMixerLocation, XSpeed);
     yAxis(YMixerLocation, YSpeed);
     mixer(50, 10000);
-    //yAxis(0, YSpeed);
     
     //cap dispense
     xAxis(XCapLocation, XSpeed);
     yAxis(YCapLocation, YSpeed);
     capDispenser.setSpeed(300);
     capDispenser.step(-StepsRequired/2);
-    //capDispenser.setSpeed(0);//test this first
-    //digitalWrite(37, LOW);
-    //digitalWrite(34, LOW);
-    //digitalWrite(35, LOW);
-    //digitalWrite(36, LOW);
+    caps --;
     yAxis(0,YSpeed);
       
     //cap press
@@ -336,31 +315,13 @@ void loop() {
     gripperServo.write(GripperOpen);
     capPress(PressLargeCup);
     capPress(PressMax);
-    calibration = 7;
+    calibration = 8;
   }
-  if(calibration == 7){
+  if(calibration == 8){
     digitalWrite(MixerCleaner, HIGH);
     delay(1000);
     digitalWrite(MixerCleaner, LOW);
   }
-  /*
-    if(calibration == 7){
-    xAxis(XBigCupLocation, XSpeed);
-    gripperServo.write(GripperPartialOpen);
-    yAxis(YBigCupLocation, YSpeed);
-    gripperServo.write(GripperClose);
-    delay(1000);
-    yAxis(YBigCupLocation+200, YSpeed);
-    digitalWrite(LargeCup, HIGH);
-    //delay(110);
-    yAxis(YBigCupLocation, YSpeed);
-    digitalWrite(LargeCup, LOW);
-    //delay(1000);
-    
-    //add syrup
-    yAxis(0, YSpeed);
-    }
-    */
 }
 
 /*********************************************************
@@ -456,7 +417,6 @@ void xAxis(long location, int stepSpeed){
   }
   if(xLocation < location){
     for(int i = 0; i < (location-xLocation); i++){
-//              Serial.println(xLocation);
               digitalWrite(XDir, HIGH);
               digitalWrite(XStep, HIGH);
               delayMicroseconds(stepSpeed);
@@ -467,7 +427,6 @@ void xAxis(long location, int stepSpeed){
   }
     if(xLocation > location){
     for(int i = 0; i < (xLocation-location); i++){
-//              Serial.println(xLocation);
               digitalWrite(XDir,LOW);
               digitalWrite(XStep, HIGH);
               delayMicroseconds(stepSpeed);
@@ -487,7 +446,6 @@ void xAxis(long location, int stepSpeed){
   while(pressCount < 600){
   pressLocation = analogRead(PressLocationInput);
     pressLocationCount += pressLocation;
-//    Serial.println(pressCount);
     pressCount ++;
     if(pressCount == 500){
       pressLoc = pressLocationCount/500.0;
@@ -495,9 +453,6 @@ void xAxis(long location, int stepSpeed){
       pressCount = 0;
   if(pressLoc < location){
     while(pressLoc < location){
-//      Serial.print(location);
-//      Serial.print(", ");
-//      Serial.println(pressLoc);
       pressLocation = analogRead(PressLocationInput);
       if(pressCount == 100){
        pressLoc = pressLocationCount/100.0;
@@ -506,8 +461,6 @@ void xAxis(long location, int stepSpeed){
       }
       pressLocationCount += pressLocation;
       pressCount ++;
-      //Serial.println(pressLoc);
-     // Serial.println(location);
           analogWrite(PressPWM, 255);
           digitalWrite(PressUp, HIGH);
           digitalWrite(PressDown, LOW);
@@ -519,9 +472,6 @@ void xAxis(long location, int stepSpeed){
   }
   else if(pressLoc > location){
     while(pressLoc > location){
-//      Serial.print(location);
-//      Serial.print(", ");
-//      Serial.println(pressLoc);
       pressLocation = analogRead(PressLocationInput);
        if(pressCount == 100){
          pressLoc = pressLocationCount/100.0;
@@ -530,8 +480,6 @@ void xAxis(long location, int stepSpeed){
        }
        pressLocationCount += pressLocation;
        pressCount ++;
-    //  Serial.println(pressLoc);
-     // Serial.println(location);
       analogWrite(PressPWM, 255);
       digitalWrite(PressUp, LOW);
       digitalWrite(PressDown, HIGH);
@@ -567,7 +515,6 @@ void xAxis(long location, int stepSpeed){
       digitalWrite(SyrupOneIn, LOW);
       break;
      default:
-//      Serial.println("ERROR");
       break;
   }
   return;
@@ -587,89 +534,3 @@ void mixer(int power, int timer){
       yAxis(0, YSpeed);
       return;
 }
-
-/*********************
- *   Cap Dispenser   *
- *********************/
- /*
- void capDispenser(int caps){
-  Serial.println("test");
-    for(int i = 0; i < StepsRequired*caps; i++){
-      Serial.print("test");
-      if(wormGearPointer == 0){
-        wormGearOne.step(-1);
-        wormGearTwo.step(-1);
-        wormGearThree.step(-1);
-        wormGearPointer = 1;
-        Serial.println("test");
-      }
-      else if(wormGearPointer == 1){
-        wormGearTwo.step(-1);
-        wormGearThree.step(-1);
-        wormGearOne.step(-1);
-        wormGearPointer = 2;  
-      }
-      else{
-        wormGearThree.step(-1);
-        wormGearOne.step(-1);
-        wormGearTwo.step(-1);
-        wormGearPointer = 3;
-      }
-    }
-    return;
- }
-
- void capDispenser(short caps, int spede){
-  wormGearOne.setSpeed(spede);
-  wormGearTwo.setSpeed(spede);
-  wormGearThree.setSpeed(spede);
-  for(int i = 0; i < StepsRequired*caps; i++){
-      if(wormGearPointer == 0){
-        wormGearOne.step(-1);
-        wormGearTwo.step(-1);
-        wormGearThree.step(-1);
-        wormGearPointer = 1;
-      }
-      else if(wormGearPointer == 1){
-        wormGearTwo.step(-1);
-        wormGearThree.step(-1);
-        wormGearOne.step(-1);
-        wormGearPointer = 2;     
-      }
-      else{
-        wormGearThree.step(-1);
-        wormGearOne.step(-1);
-        wormGearTwo.step(-1);
-        wormGearPointer = 3;
-      }
-    }
-    return;
- }
-
- void capDispenser(int steps, int spede){
-  wormGearOne.setSpeed(spede);
-  wormGearTwo.setSpeed(spede);
-  wormGearThree.setSpeed(spede);
-  for(int i = 0; i < steps; i++){
-      if(wormGearPointer == 0){
-        wormGearOne.step(-1);
-        wormGearTwo.step(-1);
-        wormGearThree.step(-1);
-        wormGearPointer = 1;
-      }
-      else if(wormGearPointer == 1){
-        wormGearTwo.step(-1);
-        wormGearThree.step(-1);
-        wormGearOne.step(-1);
-        wormGearPointer = 2;     
-      }
-      else{
-        wormGearThree.step(-1);
-        wormGearOne.step(-1);
-        wormGearTwo.step(-1);
-        wormGearPointer = 3;
-      }
-    }
-    return;
- }
- */
