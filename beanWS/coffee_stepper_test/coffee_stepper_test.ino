@@ -27,18 +27,19 @@ const int xMax = 500; // speed 10000
 int stepSpeed = 1000;
 
 //locations
-const int XBigCupLocation = 27; // speed 10000  ^
-const int YBigCupLocation = 3550; // speed 1000  ^
-const int XSmallCupLocation = 87 ; // speed 10000
-const int YSmallCupLocation = 2850; // speed 1000
-const int XSyrupLocation = 150; // speed 10000
-const int XPressLocation = 327; // speed 10000
-const int XCapLocation = 415; // speed 10000
-const int YCapLocation = 2400; //speed 1000
-const int XMixerLocation = 503; // speed 10000  ^
-const int YMixerLocation = 4485;  // speed 1000
-const int XSpeed = 10000;
-const int YSpeed = 1000;
+const int XBigCupLocation = 50; // speed 10000  ^
+const int YBigCupLocation = 3600; // speed 1000  ^
+const int XSmallCupLocation = 315; // speed 10000
+const int YSmallCupLocation = 3090; // speed 1000
+const int XSyrupLocation = 450; // speed 10000
+const int XMixerLocation = 1255; // speed 10000  ^
+const int YMixerLocation = 2900;  // speed 1000
+const int XCapLocation = 1565; // speed 10000
+const int YCapLocation = 1100;//2300; //speed 1000
+const int XPresssStopLocation = 1750; // speed 10000'
+const int YPressLocation = 500;//2300; //speed 1000
+const int YPressReleaseLocation = 200;//speed 1000
+const int XPressLocation = 1905; // speed 10000
 
 //variables
 const int GripperOpen = 78;

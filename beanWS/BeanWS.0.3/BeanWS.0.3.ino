@@ -34,7 +34,7 @@ int pressLocation = 0;
 float pressLoc = 0;
 //Mixer
 const int MixerPWM = 10;
-const int MixerCW = 28
+const int MixerCW = 28;
 const int MixerCCW = 29;
 const int MixerCleaner = 5;
 //Cap Dispenser
@@ -77,19 +77,20 @@ const float PressLargeCup = 10.0;
 const float PressSmallCup = 2.0;
 const float PressMin = 1.09;
 //Stepper Motors
-const int XBigCupLocation = 50; // speed 10000  ^
+const int XBigCupLocation = 45; // speed 10000  ^
 const int YBigCupLocation = 3600; // speed 1000  ^
 const int XSmallCupLocation = 315; // speed 10000
 const int YSmallCupLocation = 3090; // speed 1000
-const int XSyrupLocation = 450; // speed 10000
-const int XMixerLocation = 1255; // speed 10000  ^
+const int XSyrupLocation = 405; // speed 10000
+const int XMixerLocation = 1190; // speed 10000  ^
 const int YMixerLocation = 2900;  // speed 1000
-const int XCapLocation = 1565; // speed 10000
-const int YCapLocation = 1100;//2300; //speed 1000
-const int XPresssStopLocation = 1750; // speed 10000'
+const int XCapLocation = 1473; // speed 10000
+const int YCapLocation = 1095;//2300; //speed 1000
+const int XPresssStopLocation = 1650; // speed 10000'
 const int YPressLocation = 500;//2300; //speed 1000
 const int YPressReleaseLocation = 200;//speed 1000
-const int XPressLocation = 1905; // speed 10000
+const int XPressLocation = 1810; // speed 10000
+int testError = 0;
 
 
 /*************************
@@ -101,7 +102,7 @@ int pressCount = 0;
 /*************************
  *       Resources       *
  ************************/
- int largeCups = 20;
+ int largeCups = 17;
  int caps = 20;
 // int syrupOne = 1000;
 
@@ -205,6 +206,7 @@ void loop() {
   ***********************************/
   if(calibration == 0){
     capPress(100);
+    Serial.println("test");
     capPress(PressMax);
     Serial.println("testOne");
     calibration = 1;
@@ -265,7 +267,7 @@ void loop() {
      * 
      **********************/
   if(calibration == 6){
-    if(bigCups < 1 || caps < 1){
+    if(largeCups < 1 || caps < 1){
       calibration = -1;
     }
     else{
@@ -295,7 +297,8 @@ void loop() {
     //mix
     xAxis(XMixerLocation, XSpeed);
     yAxis(YMixerLocation, YSpeed);
-    mixer(50, 10000);
+    mixer(50, 2000);
+    
     
     //cap dispense
     xAxis(XCapLocation, XSpeed);
@@ -319,8 +322,13 @@ void loop() {
   }
   if(calibration == 8){
     digitalWrite(MixerCleaner, HIGH);
-    delay(1000);
+    mixer(50, 1000);
     digitalWrite(MixerCleaner, LOW);
+    delay(5000);
+    gripperServo.write(GripperClose);
+    yAxis(0,YSpeed);
+    delay(1000);
+    calibration = 6;
   }
 }
 
