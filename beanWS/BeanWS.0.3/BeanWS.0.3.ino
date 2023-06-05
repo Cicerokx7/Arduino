@@ -7,7 +7,7 @@ Servo gripperServo;
  *       pin naming       *
  **************************/
 //Stepper Calibration
-const int YSwitchInput = 48;
+const int YSwitchInput = 50;
 int ySwitch = 0;
 const int XSwitchInput = 46;
 int xSwitch = 0;
@@ -18,9 +18,8 @@ const int YDir = 12;
 const int YStep = 4;
 const int YEnable = 38;
 //Cup Dispensers
-const int LargeCup = 52;
+const int LargeCup = 49;
 const int SmallCup = 23;
-//const int CapDispenser = 50;
 //Syrup
 const int SyrupOnePWM = 8;//8
 const int SyrupOneIn = 26;//28
@@ -58,14 +57,14 @@ short count = 0;
 //const int yMax = 5850;
 const long YMax = 5725; // speed 1000
 const int XMax = 500; // speed 10000
-const int XSpeed = 1500;
+const int XSpeed = 200;
 const int YSpeed = 675;//can run at least 625 speed but strength and reliability become impractical
 
 /*************************
  *       locations       *
  *************************/
 //Gripper
-const int GripperPartialOpen = 75;//70
+const int GripperPartialOpen = 90;//70
 const int GripperOpen = 165;//150
 const int GripperClose = 60;//30
 const int GripperFullClose = 60;//30
@@ -77,19 +76,19 @@ const float PressLargeCup = 10.0;
 const float PressSmallCup = 2.0;
 const float PressMin = 1.09;
 //Stepper Motors
-const int XBigCupLocation = 45; // speed 10000  ^
-const int YBigCupLocation = 3600; // speed 1000  ^
-const int XSmallCupLocation = 315; // speed 10000
+const int XBigCupLocation = 750; // speed 10000
+const int YBigCupLocation = 3750; // speed 1000  ^
+const int XSmallCupLocation = 630; // speed 10000
 const int YSmallCupLocation = 3090; // speed 1000
-const int XSyrupLocation = 405; // speed 10000
-const int XMixerLocation = 1190; // speed 10000  ^
+const int XSyrupLocation = 3750; // speed 10000
+const int XMixerLocation = 10070; // speed 10000  ^
 const int YMixerLocation = 2900;  // speed 1000
-const int XCapLocation = 1473; // speed 10000
-const int YCapLocation = 1095;//2300; //speed 1000
-const int XPresssStopLocation = 1650; // speed 10000'
-const int YPressLocation = 500;//2300; //speed 1000
+const int XCapLocation = 12450; // speed 10000
+const int YCapLocation = 1000; //2300; //speed 1000
+const int XPresssStopLocation = 14000; // speed 10000'
+const int YPressLocation = 450; //2300; //speed 1000
 const int YPressReleaseLocation = 200;//speed 1000
-const int XPressLocation = 1810; // speed 10000
+const int XPressLocation = 16500; // speed 10000
 int testError = 0;
 
 
@@ -102,8 +101,8 @@ int pressCount = 0;
 /*************************
  *       Resources       *
  ************************/
- int largeCups = 17;
- int caps = 20;
+ int largeCups = 10;//17
+ int caps = 18;
 // int syrupOne = 1000;
 
 void setup() {
@@ -213,7 +212,13 @@ void loop() {
   }
   if(calibration == 1){
     StepsRequired = STEPS_PER_OUT_REV;
-    capDispenser.setSpeed(300);
+//    capDispenser.setSpeed(300);
+//    capDispenser.step(-StepsRequired/2);
+//    caps --;
+//    capDispenser.step(-StepsRequired/2);
+//    caps --;
+//    capDispenser.step(-StepsRequired/2);
+//    caps --;
     calibration = 2;
   }
   if(calibration == 2){
@@ -309,6 +314,7 @@ void loop() {
     yAxis(0,YSpeed);
       
     //cap press
+    delay(10000);
     xAxis(XPresssStopLocation, XSpeed);
     yAxis(YPressLocation,YSpeed);
     xAxis(XPressLocation, XSpeed);
@@ -321,13 +327,13 @@ void loop() {
     calibration = 8;
   }
   if(calibration == 8){
-    digitalWrite(MixerCleaner, HIGH);
-    mixer(50, 1000);
-    digitalWrite(MixerCleaner, LOW);
-    delay(5000);
+//    digitalWrite(MixerCleaner, HIGH);
+//    mixer(50, 1000);
+//    digitalWrite(MixerCleaner, LOW);
+//    delay(5000);
     gripperServo.write(GripperClose);
-    yAxis(0,YSpeed);
     delay(1000);
+    yAxis(0,YSpeed);
     calibration = 6;
   }
 }

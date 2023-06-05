@@ -57,7 +57,7 @@ short count = 0;
 //const int yMax = 5850;
 const long YMax = 5725; // speed 1000
 const int XMax = 500; // speed 10000
-const int XSpeed = 1500;
+const int XSpeed = 175;
 const int YSpeed = 675;//can run at least 625 speed but strength and reliability become impractical
 
 /*************************
@@ -75,7 +75,7 @@ const float PressLargeCup = 15.0;
 const float PressSmallCup = 2.0;
 const float PressMin = 1.09;
 //Stepper Motors
-const int XBigCupLocation = 50; // speed 10000  ^
+const int XBigCupLocation = 85; // speed 10000  ^
 const int YBigCupLocation = 3600; // speed 1000  ^
 const int XSmallCupLocation = 315; // speed 10000
 const int YSmallCupLocation = 3090; // speed 1000
