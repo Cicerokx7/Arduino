@@ -16,7 +16,7 @@ const int XDir = 6;
 const int XStep = 7;
 const int YDir = 12;
 const int YStep = 4;
-const int YEnable = 38;
+const int YEnable = 13;
 //Cup Dispensers
 const int LargeCup = 49;
 const int SmallCup = 23;
@@ -66,29 +66,29 @@ const int YSpeed = 675;//can run at least 625 speed but strength and reliability
 //Gripper
 const int GripperPartialOpen = 90;//70
 const int GripperOpen = 165;//150
-const int GripperClose = 60;//30
-const int GripperFullClose = 60;//30
+const int GripperClose = 65;//30
+const int GripperFullClose = 65;//30
 //Cap Press
 const float PressMax = 957.0;
 const float PressStart = 0.0;
 const float PressHoldLargeCup = 35.0;
-const float PressLargeCup = 10.0;
+const float PressLargeCup = 13.0;
 const float PressSmallCup = 2.0;
 const float PressMin = 1.09;
 //Stepper Motors
-const int XBigCupLocation = 750; // speed 10000
+const int XBigCupLocation = 600; // speed 10000
 const int YBigCupLocation = 3750; // speed 1000  ^
 const int XSmallCupLocation = 630; // speed 10000
 const int YSmallCupLocation = 3090; // speed 1000
 const int XSyrupLocation = 3750; // speed 10000
-const int XMixerLocation = 10070; // speed 10000  ^
+const int XMixerLocation = 10120; // speed 10000  ^
 const int YMixerLocation = 2900;  // speed 1000
-const int XCapLocation = 12450; // speed 10000
+const int XCapLocation = 12530; // speed 10000
 const int YCapLocation = 1000; //2300; //speed 1000
 const int XPresssStopLocation = 14000; // speed 10000'
-const int YPressLocation = 450; //2300; //speed 1000
+const int YPressLocation = 550; //2300; //speed 1000
 const int YPressReleaseLocation = 200;//speed 1000
-const int XPressLocation = 16500; // speed 10000
+const int XPressLocation = 14750; // speed 10000
 int testError = 0;
 
 
@@ -108,7 +108,7 @@ int pressCount = 0;
 void setup() {
   //PC Comunication
   Serial.begin(9600);
-  Serial.println("Stepper test!");
+//  Serial.println("Stepper test!");
   
   //Gripper
     gripperServo.attach(21);
@@ -204,10 +204,12 @@ void loop() {
   *                                  *
   ***********************************/
   if(calibration == 0){
+    xLocation = 0;
+    yLocation = 0;
     capPress(100);
-    Serial.println("test");
+//    Serial.println("test");
     capPress(PressMax);
-    Serial.println("testOne");
+//    Serial.println("testOne");
     calibration = 1;
   }
   if(calibration == 1){
@@ -238,7 +240,7 @@ void loop() {
     }
     if(count == 3){
       count = 0;
-      digitalWrite(YEnable, LOW);
+      digitalWrite(YEnable, HIGH);
       calibration = 3;
     }
   }
@@ -252,7 +254,7 @@ void loop() {
     calibration = 5;
   }
   if(calibration == 5){
-    gripperServo.write(GripperFullClose);
+    gripperServo.write(GripperClose);
     if(xSwitch == LOW){
       digitalWrite(XDir, LOW);
       digitalWrite(XStep, HIGH);
@@ -262,7 +264,7 @@ void loop() {
     }
     if(xSwitch == HIGH){
       calibration = 6;
-      gripperServo.write(GripperFullClose);
+      gripperServo.write(GripperClose);
       delay(1000);
     }
   }
@@ -300,9 +302,11 @@ void loop() {
     xAxis(XSyrupLocation, XSpeed);
     syrup(1, 3000);
     //mix
+    gripperServo.write(GripperFullClose);
     xAxis(XMixerLocation, XSpeed);
     yAxis(YMixerLocation, YSpeed);
     mixer(50, 2000);
+    gripperServo.write(GripperClose);
     
     
     //cap dispense
@@ -314,16 +318,17 @@ void loop() {
     yAxis(0,YSpeed);
       
     //cap press
-    delay(10000);
-    xAxis(XPresssStopLocation, XSpeed);
+//    xAxis(XPresssStopLocation, XSpeed);
     yAxis(YPressLocation,YSpeed);
     xAxis(XPressLocation, XSpeed);
-    delay(5000);
+    yAxis(YPressReleaseLocation,YSpeed);
+//    delay(10000);
     yAxis(YPressReleaseLocation,YSpeed);
     capPress(PressHoldLargeCup);
     gripperServo.write(GripperOpen);
     capPress(PressLargeCup);
     capPress(PressMax);
+    delay(10000);
     calibration = 8;
   }
   if(calibration == 8){
@@ -334,7 +339,7 @@ void loop() {
     gripperServo.write(GripperClose);
     delay(1000);
     yAxis(0,YSpeed);
-    calibration = 6;
+    calibration = 0;
   }
 }
 
@@ -347,58 +352,59 @@ void loop() {
  /******************************
   *       Stepper Motors       *
   ******************************/
-void xStepper(char dir, long steps, int stepSpeed){
-  if(dir == 'R'){
-    for(int i = 0; i < steps; i++){
-              digitalWrite(XDir, LOW);
-              digitalWrite(XStep, HIGH);
-              delayMicroseconds(stepSpeed);
-              digitalWrite(XStep, LOW);
-              delayMicroseconds(stepSpeed);
-    }
-    xLocation += steps;
-  }
-  if(dir == 'F'){
-    for(int i = 0; i < steps; i++){
-              digitalWrite(XDir, HIGH);
-              digitalWrite(XStep, HIGH);
-              delayMicroseconds(stepSpeed);
-              digitalWrite(XStep, LOW);
-              delayMicroseconds(stepSpeed);
-    }
-    xLocation -= steps;
-  }
-  return;
-}
-
-void yStepper(char dir, long steps, int stepSpeed){
-    digitalWrite(YEnable, LOW);
-    if(dir == 'F'){
-    for(int i = 0; i < steps; i++){
-              digitalWrite(YDir, HIGH);
-              digitalWrite(YStep, HIGH);
-              delayMicroseconds(stepSpeed);
-              digitalWrite(YStep, LOW);
-              delayMicroseconds(stepSpeed);
-    }
-    yLocation += steps;
-  }
-  if(dir == 'R'){
-    for(int i = 0; i < steps; i++){
-              digitalWrite(YDir, LOW);
-              digitalWrite(YStep, HIGH);
-              delayMicroseconds(stepSpeed);
-              digitalWrite(YStep, LOW);
-              delayMicroseconds(stepSpeed);
-    }
-    yLocation -= steps;
-  }
-  digitalWrite(YEnable, HIGH);
-  return;
-}
+//void xStepper(char dir, long steps, int stepSpeed){
+//  if(dir == 'R'){
+//    for(int i = 0; i < steps; i++){
+//              digitalWrite(XDir, LOW);
+//              digitalWrite(XStep, HIGH);
+//              delayMicroseconds(stepSpeed);
+//              digitalWrite(XStep, LOW);
+//              delayMicroseconds(stepSpeed);
+//    }
+//    xLocation += steps;
+//  }
+//  if(dir == 'F'){
+//    for(int i = 0; i < steps; i++){
+//              digitalWrite(XDir, HIGH);
+//              digitalWrite(XStep, HIGH);
+//              delayMicroseconds(stepSpeed);
+//              digitalWrite(XStep, LOW);
+//              delayMicroseconds(stepSpeed);
+//    }
+//    xLocation -= steps;
+//  }
+//  return;
+//}
+//
+//void yStepper(char dir, long steps, int stepSpeed){
+//    digitalWrite(YEnable, LOW);
+//    if(dir == 'F'){
+//    for(int i = 0; i < steps; i++){
+//              digitalWrite(YDir, HIGH);
+//              digitalWrite(YStep, HIGH);
+//              delayMicroseconds(stepSpeed);
+//              digitalWrite(YStep, LOW);
+//              delayMicroseconds(stepSpeed);
+//    }
+//    yLocation += steps;
+//  }
+//  if(dir == 'R'){
+//    for(int i = 0; i < steps; i++){
+//              digitalWrite(YDir, LOW);
+//              digitalWrite(YStep, HIGH);
+//              delayMicroseconds(stepSpeed);
+//              digitalWrite(YStep, LOW);
+//              delayMicroseconds(stepSpeed);
+//    }
+//    yLocation -= steps;
+//  }
+//  digitalWrite(YEnable, HIGH);
+//  return;
+//}
 
 void yAxis(long location, int stepSpeed){
   if(yLocation == location){
+    digitalWrite(YEnable, HIGH);
     return;
   }
   digitalWrite(YEnable, LOW);
@@ -426,18 +432,20 @@ void yAxis(long location, int stepSpeed){
     return;
 }
 void xAxis(long location, int stepSpeed){
+  Serial.println(xLocation);
   if(xLocation == location){
     return;
   }
   if(xLocation < location){
-    for(int i = 0; i < (location-xLocation); i++){
+    for(; xLocation < location; xLocation++){
+//      Serial.println(xLocation);
               digitalWrite(XDir, HIGH);
               digitalWrite(XStep, HIGH);
               delayMicroseconds(stepSpeed);
               digitalWrite(XStep, LOW);
               delayMicroseconds(stepSpeed);
     }
-    xLocation += location-xLocation;
+//    xLocation += location-xLocation;
   }
     if(xLocation > location){
     for(int i = 0; i < (xLocation-location); i++){
@@ -450,6 +458,7 @@ void xAxis(long location, int stepSpeed){
     xLocation -= xLocation-location;
   }
   Serial.println(xLocation);
+  Serial.println(location);
   return;
 }
 
