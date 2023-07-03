@@ -69,26 +69,26 @@ const int GripperOpen = 165;//150
 const int GripperClose = 65;//30
 const int GripperFullClose = 65;//30
 //Cap Press
-const float PressMax = 957.0;
+const float PressMax = 1010.0;//957.0;
 const float PressStart = 0.0;
-const float PressHoldLargeCup = 35.0;
-const float PressLargeCup = 13.0;
+const float PressHoldLargeCup = 28.0;
+const float PressLargeCup = 11.5;
 const float PressSmallCup = 2.0;
 const float PressMin = 1.09;
 //Stepper Motors
-const int XBigCupLocation = 600; // speed 10000
+const int XBigCupLocation = 700; // speed 10000
 const int YBigCupLocation = 3750; // speed 1000  ^
 const int XSmallCupLocation = 630; // speed 10000
 const int YSmallCupLocation = 3090; // speed 1000
 const int XSyrupLocation = 3750; // speed 10000
-const int XMixerLocation = 10120; // speed 10000  ^
+const int XMixerLocation = 10750; // speed 10000  ^
 const int YMixerLocation = 2900;  // speed 1000
-const int XCapLocation = 12530; // speed 10000
-const int YCapLocation = 1000; //2300; //speed 1000
+const int XCapLocation = 13300; // speed 10000
+const int YCapLocation = 900; //2300; //speed 1000
 const int XPresssStopLocation = 14000; // speed 10000'
-const int YPressLocation = 550; //2300; //speed 1000
+const int YPressLocation = 650; //2300; //speed 1000
 const int YPressReleaseLocation = 200;//speed 1000
-const int XPressLocation = 14750; // speed 10000
+const int XPressLocation = 15700; // speed 10000
 int testError = 0;
 
 
@@ -101,7 +101,7 @@ int pressCount = 0;
 /*************************
  *       Resources       *
  ************************/
- int largeCups = 10;//17
+ int largeCups = 14;//17
  int caps = 18;
 // int syrupOne = 1000;
 
@@ -196,7 +196,6 @@ void loop() {
   *       Set Input Vars       *
   ******************************/
   xSwitch = digitalRead(XSwitchInput);
-    
   ySwitch = digitalRead(YSwitchInput);
   /***********************************
   *                                  *
@@ -214,13 +213,13 @@ void loop() {
   }
   if(calibration == 1){
     StepsRequired = STEPS_PER_OUT_REV;
-//    capDispenser.setSpeed(300);
-//    capDispenser.step(-StepsRequired/2);
-//    caps --;
-//    capDispenser.step(-StepsRequired/2);
-//    caps --;
-//    capDispenser.step(-StepsRequired/2);
-//    caps --;
+    capDispenser.setSpeed(300);
+    capDispenser.step(-StepsRequired/2);
+    caps --;
+    capDispenser.step(-StepsRequired/2);
+    caps --;
+    capDispenser.step(-StepsRequired/2);
+    caps --;
     calibration = 2;
   }
   if(calibration == 2){
@@ -263,9 +262,30 @@ void loop() {
       delayMicroseconds(XSpeed*2);
     }
     if(xSwitch == HIGH){
-      calibration = 6;
-      gripperServo.write(GripperClose);
+      for(int i = 0; i < 300; i++){
+        digitalWrite(XDir, HIGH);
+        digitalWrite(XStep, HIGH);
+        delayMicroseconds(XSpeed*2);
+        digitalWrite(XStep, LOW);
+        delayMicroseconds(XSpeed*2);
+      }
       delay(1000);
+      xSwitch = digitalRead(XSwitchInput);
+      calibration = 6;
+    }
+  }
+
+  if(calibration == 6){
+    if(xSwitch == LOW){
+      digitalWrite(XDir, LOW);
+      digitalWrite(XStep, HIGH);
+      delayMicroseconds(XSpeed*8);
+      digitalWrite(XStep, LOW);
+      delayMicroseconds(XSpeed*8);
+    }
+    if(xSwitch == HIGH){
+      calibration = 7;
+      gripperServo.write(GripperClose);
     }
   }
     /*********************
@@ -273,19 +293,19 @@ void loop() {
      * program begins
      * 
      **********************/
-  if(calibration == 6){
+  if(calibration == 7){
     if(largeCups < 1 || caps < 1){
       calibration = -1;
     }
     else{
-      calibration = 7;
+      calibration = 8;
     }
   }
-  if(calibration == 7){
+  if(calibration == 8){
     /******************************
      *       grab large cup       *
      ******************************/
-    calibration = 8;
+    calibration = 9;
     xAxis(XBigCupLocation, XSpeed);
     gripperServo.write(GripperPartialOpen);
     yAxis(YBigCupLocation, YSpeed);
@@ -328,10 +348,10 @@ void loop() {
     gripperServo.write(GripperOpen);
     capPress(PressLargeCup);
     capPress(PressMax);
-    delay(10000);
-    calibration = 8;
+    delay(5000);
+    calibration = 9;
   }
-  if(calibration == 8){
+  if(calibration == 9){
 //    digitalWrite(MixerCleaner, HIGH);
 //    mixer(50, 1000);
 //    digitalWrite(MixerCleaner, LOW);
@@ -339,7 +359,7 @@ void loop() {
     gripperServo.write(GripperClose);
     delay(1000);
     yAxis(0,YSpeed);
-    calibration = 0;
+    calibration = 7;
   }
 }
 
