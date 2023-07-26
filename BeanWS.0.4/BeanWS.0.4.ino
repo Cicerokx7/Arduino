@@ -42,9 +42,7 @@ const float GEAR_RED = 64;
 const float STEPS_PER_OUT_REV = STEPS_PER_REV*GEAR_RED;
 int StepsRequired;
 short wormGearPointer = 0;
-//Stepper wormGearOne(STEPS_PER_REV, 38, 42, 40, 44);
 Stepper capDispenser(STEPS_PER_REV, 38, 42, 40, 44);//37, 34, 35, 36);
-//Stepper wormGearThree(STEPS_PER_REV, 39, 43, 41, 45);
 
 
 /*********************************
@@ -103,12 +101,10 @@ int pressCount = 0;
  ************************/
  int largeCups = 14;//17
  int caps = 18;
-// int syrupOne = 1000;
 
 void setup() {
   //PC Comunication
   Serial.begin(9600);
-//  Serial.println("Stepper test!");
   
   //Gripper
     gripperServo.attach(21);
@@ -131,7 +127,6 @@ void setup() {
     pinMode(PressUp, OUTPUT);
     pinMode(PressDown, OUTPUT);
     //Dispensers
-//    pinMode(CapDispenser, OUTPUT);
     pinMode(LargeCup, OUTPUT);
     pinMode(SmallCup, OUTPUT);
     //Syrup
@@ -206,9 +201,7 @@ void loop() {
     xLocation = 0;
     yLocation = 0;
     capPress(100);
-//    Serial.println("test");
     capPress(PressMax);
-//    Serial.println("testOne");
     calibration = 1;
   }
   if(calibration == 1){
@@ -318,13 +311,15 @@ void loop() {
     //add syrup
     yAxis(0, YSpeed);
     xAxis(XSyrupLocation, XSpeed);
-    syrup(1, 3000);
+    syrup(1, 30000);
+
+xAxis(((XMixerLocation-XSyrupLocation)/2)+XSyrupLocation, XSpeed);
+delay(30000);
+    
     //mix
-//    gripperServo.write(GripperFullClose);
     xAxis(XMixerLocation, XSpeed);
     yAxis(YMixerLocation, YSpeed);
-    mixer(50, 2000);
-//    gripperServo.write(GripperClose);
+    mixer(50, 30000);
     
     
     //cap dispense
@@ -337,11 +332,9 @@ void loop() {
     yAxis(0,YSpeed);
       
     //cap press
-//    xAxis(XPresssStopLocation, XSpeed);
     yAxis(YPressLocation,YSpeed);
     xAxis(XPressLocation, XSpeed);
     yAxis(YPressReleaseLocation,YSpeed);
-//    delay(10000);
     yAxis(YPressReleaseLocation,YSpeed);
     capPress(PressHoldLargeCup);
     gripperServo.write(GripperOpen);
@@ -351,10 +344,6 @@ void loop() {
     calibration = 9;
   }
   if(calibration == 9){
-//    digitalWrite(MixerCleaner, HIGH);
-//    mixer(50, 1000);
-//    digitalWrite(MixerCleaner, LOW);
-//    delay(5000);
     gripperServo.write(GripperFullClose);
     delay(1000);
     yAxis(0,YSpeed);
@@ -367,59 +356,6 @@ void loop() {
  *                      functions                        *
  *                                                       *
  *********************************************************/
-
- /******************************
-  *       Stepper Motors       *
-  ******************************/
-//void xStepper(char dir, long steps, int stepSpeed){
-//  if(dir == 'R'){
-//    for(int i = 0; i < steps; i++){
-//              digitalWrite(XDir, LOW);
-//              digitalWrite(XStep, HIGH);
-//              delayMicroseconds(stepSpeed);
-//              digitalWrite(XStep, LOW);
-//              delayMicroseconds(stepSpeed);
-//    }
-//    xLocation += steps;
-//  }
-//  if(dir == 'F'){
-//    for(int i = 0; i < steps; i++){
-//              digitalWrite(XDir, HIGH);
-//              digitalWrite(XStep, HIGH);
-//              delayMicroseconds(stepSpeed);
-//              digitalWrite(XStep, LOW);
-//              delayMicroseconds(stepSpeed);
-//    }
-//    xLocation -= steps;
-//  }
-//  return;
-//}
-//
-//void yStepper(char dir, long steps, int stepSpeed){
-//    digitalWrite(YEnable, LOW);
-//    if(dir == 'F'){
-//    for(int i = 0; i < steps; i++){
-//              digitalWrite(YDir, HIGH);
-//              digitalWrite(YStep, HIGH);
-//              delayMicroseconds(stepSpeed);
-//              digitalWrite(YStep, LOW);
-//              delayMicroseconds(stepSpeed);
-//    }
-//    yLocation += steps;
-//  }
-//  if(dir == 'R'){
-//    for(int i = 0; i < steps; i++){
-//              digitalWrite(YDir, LOW);
-//              digitalWrite(YStep, HIGH);
-//              delayMicroseconds(stepSpeed);
-//              digitalWrite(YStep, LOW);
-//              delayMicroseconds(stepSpeed);
-//    }
-//    yLocation -= steps;
-//  }
-//  digitalWrite(YEnable, HIGH);
-//  return;
-//}
 
 void yAxis(long location, int stepSpeed){
   if(yLocation == location){
