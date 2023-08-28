@@ -22,8 +22,8 @@ const int LargeCup = 49;
 const int SmallCup = 23;
 //Syrup
 const int SyrupOnePWM = 8;//8
-const int SyrupOneIn = 26;//28
-const int SyrupOneOut = 27;//29
+const int SyrupOneIn = 27;//28
+const int SyrupOneOut = 26;//29
 //Cap Press
 const int PressPWM = 9;//9
 const int PressUp = 25;
@@ -64,24 +64,24 @@ const int YSpeed = 675;//can run at least 625 speed but strength and reliability
 //Gripper
 const int GripperPartialOpen = 90;//70
 const int GripperOpen = 165;//150
-const int GripperClose = 77;//30
+const int GripperClose = 71;//30
 const int GripperFullClose = 65;//30
 //Cap Press
 const float PressMax = 1023.0;//957.0;
 const float PressStart = 0.0;
-const float PressHoldLargeCup = 20.0;
-const float PressLargeCup = 7.5;//11;
+const float PressHoldLargeCup = 19.5;
+const float PressLargeCup = 6.5;//11;
 const float PressSmallCup = 2.0;
 const float PressMin = 1.09;
 //Stepper Motors
 const int XBigCupLocation = 700; // speed 10000
-const int YBigCupLocation = 3750; // speed 1000  ^
+const int YBigCupLocation = 3650; // speed 1000  ^
 const int XSmallCupLocation = 630; // speed 10000
 const int YSmallCupLocation = 3090; // speed 1000
 const int XSyrupLocation = 3750; // speed 10000
-const int XMixerLocation = 10750; // speed 10000  ^
+const int XMixerLocation = 10752; // speed 10000  ^
 const int YMixerLocation = 2900;  // speed 1000
-const int XCapLocation = 13268; // speed 10000
+const int XCapLocation = 13273; // speed 10000
 const int YCapLocation = 1100; //2300; //speed 1000
 const int XPresssStopLocation = 14000; // speed 10000'
 const int YPressLocation = 650; //2300; //speed 1000
@@ -307,19 +307,19 @@ void loop() {
     yAxis(YBigCupLocation, YSpeed);
     digitalWrite(LargeCup, LOW);
     largeCups --;
+    yAxis(0, YSpeed);
+
+    xAxis(((XMixerLocation-XSyrupLocation)/2)+XSyrupLocation, XSpeed);
+    delay(20000);
     
     //add syrup
-    yAxis(0, YSpeed);
     xAxis(XSyrupLocation, XSpeed);
-    syrup(1, 30000);
-
-xAxis(((XMixerLocation-XSyrupLocation)/2)+XSyrupLocation, XSpeed);
-delay(30000);
+    syrup(1, 25000);
     
     //mix
     xAxis(XMixerLocation, XSpeed);
     yAxis(YMixerLocation, YSpeed);
-    mixer(50, 30000);
+    mixer(70, 30000);
     
     
     //cap dispense
@@ -330,7 +330,7 @@ delay(30000);
     capDispenser.step(-StepsRequired/2);
     caps --;
     yAxis(0,YSpeed);
-      
+    
     //cap press
     yAxis(YPressLocation,YSpeed);
     xAxis(XPressLocation, XSpeed);
