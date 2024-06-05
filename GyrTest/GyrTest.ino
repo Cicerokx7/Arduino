@@ -16,6 +16,14 @@ Adafruit_LSM9DS1 lsm = Adafruit_LSM9DS1();
 // Or hardware SPI! In this case, only CS pins are passed in
 //Adafruit_LSM9DS1 lsm = Adafruit_LSM9DS1(LSM9DS1_XGCS, LSM9DS1_MCS);
 
+double x = 0;
+double y = 0;
+double z = 0;
+double angle = 0;
+double e = 0;
+double xt = 0;
+double yt = 0;
+double zt = 0;
 
 void setupSensor()
 {
@@ -34,7 +42,7 @@ void setupSensor()
   // 3.) Setup the gyroscope
   lsm.setupGyro(lsm.LSM9DS1_GYROSCALE_245DPS);
   //lsm.setupGyro(lsm.LSM9DS1_GYROSCALE_500DPS);
-  //lsm.setupGyro(lsm.LSM9DS1_GYROSCALE_2000DPS);
+//  lsm.setupGyro(lsm.LSM9DS1_GYROSCALE_2000DPS);
 }
 
 
@@ -69,18 +77,23 @@ void loop()
 
   lsm.getEvent(&a, &m, &g, &temp); 
 
-  Serial.print("Accel X: "); Serial.print(a.acceleration.x); Serial.print(" m/s^2");
-  Serial.print("\tY: "); Serial.print(a.acceleration.y);     Serial.print(" m/s^2 ");
-  Serial.print("\tZ: "); Serial.print(a.acceleration.z);     Serial.println(" m/s^2 ");
+//  Serial.print("Gyro X Raw: "); Serial.print(g.gyro.x);   Serial.print(" rad/s");
+//  Serial.print("\tY: "); Serial.print(g.gyro.y);      Serial.print(" rad/s");
+//  Serial.print("\tZ: "); Serial.print(g.gyro.z);      Serial.println(" rad/s");
+  if(g.gyro.x > e || g.gyro.x < -e){
+    x += g.gyro.x;
+  }
+  if(g.gyro.y > e || g.gyro.y < -e){
+    y += g.gyro.y;
+  }
+  if(g.gyro.z > e || g.gyro.z < -e){
+    z += g.gyro.z;
+  }
 
-  Serial.print("Mag X: "); Serial.print(m.magnetic.x);   Serial.print(" uT");
-  Serial.print("\tY: "); Serial.print(m.magnetic.y);     Serial.print(" uT");
-  Serial.print("\tZ: "); Serial.print(m.magnetic.z);     Serial.println(" uT");
+angle = abs(int(z) % 680);
+if(angle < (680/4) || angle > ((680/4)*3)){
+  Serial.print("test");
+}
 
-  Serial.print("Gyro X: "); Serial.print(g.gyro.x);   Serial.print(" rad/s");
-  Serial.print("\tY: "); Serial.print(g.gyro.y);      Serial.print(" rad/s");
-  Serial.print("\tZ: "); Serial.print(g.gyro.z);      Serial.println(" rad/s");
-
-  Serial.println();
-  delay(200);
+  Serial.println(angle);
 }

@@ -1,5 +1,5 @@
 /***************************************************************************
-  This is a library for the LSM9DS1 Accelerometer and magnentometer/compass
+  This is a library for the LSM9DS1 Accelerometer and magnetometer/compass
 
   Designed specifically to work with the Adafruit LSM9DS1 Breakouts
 
@@ -16,10 +16,10 @@
 #define __LSM9DS1_H__
 
 #include "Arduino.h"
+#include <Adafruit_I2CDevice.h>
 #include <Adafruit_LIS3MDL.h>
+#include <Adafruit_SPIDevice.h>
 #include <Adafruit_Sensor.h>
-#include <SPI.h>
-#include <Wire.h>
 
 #define LSM9DS1_ADDRESS_ACCELGYRO (0x6B)
 #define LSM9DS1_ADDRESS_MAG (0x1E)
@@ -108,20 +108,16 @@ public:
     LSM9DS1_ACCELRANGE_8G = (0b11 << 3),
   } lsm9ds1AccelRange_t;
 
-  /**! Enumeration for accelerometer data rage 3.125 - 1600 Hz */
+  /**! Enumeration for accelerometer data rate 10 - 952 Hz */
   typedef enum {
-    LSM9DS1_ACCELDATARATE_POWERDOWN = (0b0000 << 4),
-    LSM9DS1_ACCELDATARATE_3_125HZ = (0b0001 << 4),
-    LSM9DS1_ACCELDATARATE_6_25HZ = (0b0010 << 4),
-    LSM9DS1_ACCELDATARATE_12_5HZ = (0b0011 << 4),
-    LSM9DS1_ACCELDATARATE_25HZ = (0b0100 << 4),
-    LSM9DS1_ACCELDATARATE_50HZ = (0b0101 << 4),
-    LSM9DS1_ACCELDATARATE_100HZ = (0b0110 << 4),
-    LSM9DS1_ACCELDATARATE_200HZ = (0b0111 << 4),
-    LSM9DS1_ACCELDATARATE_400HZ = (0b1000 << 4),
-    LSM9DS1_ACCELDATARATE_800HZ = (0b1001 << 4),
-    LSM9DS1_ACCELDATARATE_1600HZ = (0b1010 << 4)
-  } lm9ds1AccelDataRate_t;
+    LSM9DS1_ACCELDATARATE_POWERDOWN = (0b0000 << 5),
+    LSM9DS1_ACCELDATARATE_10HZ = (0b001 << 5),
+    LSM9DS1_ACCELDATARATE_50HZ = (0b010 << 5),
+    LSM9DS1_ACCELDATARATE_119HZ = (0b011 << 5),
+    LSM9DS1_ACCELDATARATE_238HZ = (0b100 << 5),
+    LSM9DS1_ACCELDATARATE_476HZ = (0b101 << 5),
+    LSM9DS1_ACCELDATARATE_952HZ = (0b110 << 5),
+  } lsm9ds1AccelDataRate_t;
 
   /**! Enumeration for magnetometer scaling (4/8/12/16 gauss) */
   typedef enum {
@@ -134,11 +130,11 @@ public:
   /**! Enumeration for gyroscope scaling (245/500/2000 dps) */
   typedef enum {
     LSM9DS1_GYROSCALE_245DPS =
-        (0b00 << 4), // +/- 245 degrees per second rotation
+        (0b00 << 3), // +/- 245 degrees per second rotation
     LSM9DS1_GYROSCALE_500DPS =
-        (0b01 << 4), // +/- 500 degrees per second rotation
+        (0b01 << 3), // +/- 500 degrees per second rotation
     LSM9DS1_GYROSCALE_2000DPS =
-        (0b11 << 4) // +/- 2000 degrees per second rotation
+        (0b11 << 3) // +/- 2000 degrees per second rotation
   } lsm9ds1GyroScale_t;
 
   /**! 3D floating point vector with X Y Z components */
@@ -162,7 +158,8 @@ public:
   void readMag(void);
   void readTemp(void);
 
-  void setupAccel(lsm9ds1AccelRange_t range);
+  void setupAccel(lsm9ds1AccelRange_t range,
+                  lsm9ds1AccelDataRate_t rate = LSM9DS1_ACCELDATARATE_10HZ);
   void setupMag(lsm9ds1MagGain_t gain);
   void setupGyro(lsm9ds1GyroScale_t scale);
 
@@ -236,14 +233,14 @@ public:
   Adafruit_Sensor &getMag(void) { return _magSensor; }
 
 private:
+  Adafruit_I2CDevice *i2c_dev = NULL; ///< Pointer to I2C bus interface
+  Adafruit_SPIDevice *spi_dev = NULL; ///< Pointer to SPI bus interface
   void write8(boolean type, byte reg, byte value);
   byte read8(boolean type, byte reg);
   byte readBuffer(boolean type, byte reg, byte len, uint8_t *buffer);
-  uint8_t spixfer(uint8_t data);
-  void initI2C(TwoWire *wireBus, int32_t sensorID);
+  void initSensor(int32_t sensorID);
 
-  boolean _i2c;
-  TwoWire *_wire;
+  TwoWire *_wire = NULL;
   int8_t _csm, _csxg, _mosi, _miso, _clk;
   float _accel_mg_lsb;
   float _gyro_dps_digit;
